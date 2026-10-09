@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VIBRA — Branding, web y productos digitales</title>
+<meta name="description" content="VIBRA es un estudio de branding, sitios web, apps y sistemas a medida en Valera, Venezuela. Construimos marcas que funcionan.">
+<meta name="theme-color" content="#0A0612">
+<link rel="icon" type="image/png" href="assets/icon-192.png">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:title" content="VIBRA — Branding, web y productos digitales">
+<meta property="og:description" content="Construimos marcas, apps, sitios web y sistemas a medida. Estudio en Valera, Venezuela.">
+<meta property="og:image" content="https://vibra.ink/assets/og.jpg">
+<meta property="og:locale" content="es_VE">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,700..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- Bloque 1: hero -->
+<div id="inicio" class="vh-scroll" style="height: 300vh">
+<div class="vh-stage">
+
+<canvas class="vh-px" aria-hidden="true"></canvas>
+<div class="vh-logo">
+<img class="vh-whole" src="assets/logo-blanco.png" alt="VIBRA" id="vh-whole">
+</div>
+
+<div style="position: absolute; top: 0; right: 0; left: 0; display: flex; align-items: center; justify-content: space-between; padding: 32px 40px">
+<img src="assets/iso-gradiente.png" alt="" aria-hidden="true" style="height: 34px; width: auto; display: block">
+<button class="vibra-menu" type="button" id="btn-menu" aria-expanded="false" aria-controls="vn-panel" style="font-size: 26px; font-weight: 800; color: #FFFFFF; display: flex; align-items: center; gap: 10px">Menú <span style="font-size: 34px; line-height: 1; font-weight: 700">+</span></button>
+</div>
+
+</div>
+</div>
+
+<!-- Bloque 2: mensaje -->
+<div style="position: relative; width: 100%; min-height: 100vh; overflow: hidden; background: #FF1FC8; display: flex; align-items: center; justify-content: center; padding: 120px 24px; box-sizing: border-box">
+
+<h2 aria-label="Construimos marcas que funcionan." style="margin: 0; text-align: center; text-transform: uppercase; font-weight: 800; font-size: min(12vw, 200px); line-height: 0.92; letter-spacing: -0.02em; color: #FFFFFF">
+<span style="display: block">Construimos</span>
+<span class="vibra-slot" aria-hidden="true"><span class="vibra-cube"><span class="vibra-face f1">Marcas</span><span class="vibra-face f2">Apps</span><span class="vibra-face f3">Sitios web</span><span class="vibra-face f4">Sistemas<br>a medida</span></span></span>
+<span style="display: block">que</span>
+<span style="display: block; color: #FFD0F3">funcionan.</span>
+</h2>
+
+</div>
+
+<!-- Bloque 3: galería -->
+<div id="trabajo" class="vg-scroll" style="height: 400vh">
+<section class="vg-section" aria-roledescription="carrusel" aria-label="El trabajo real">
+
+<h2 class="vg-label">El trabajo real</h2>
+
+<div class="vg-stage" id="vg-stage"></div>
+
+<p class="vg-sr" id="vg-sr" aria-live="polite"></p>
+<span class="vg-count" id="vg-count" aria-hidden="true">01 / 06</span>
+
+<div class="vg-controls">
+<button class="vg-btn prev" type="button" id="vg-prev" aria-label="Proyecto anterior">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0A0612" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+</button>
+<button class="vg-btn next" type="button" id="vg-next" aria-label="Proyecto siguiente">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14F0FF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</button>
+</div>
+
+</section>
+</div>
+
+<!-- Bloque 4: contacto -->
+<section id="contacto" style="position: relative; width: 100%; min-height: 100vh; overflow: hidden; background: #7B2FF7; display: flex; flex-direction: column; justify-content: space-between; gap: 64px; padding: 120px 40px 64px; box-sizing: border-box">
+
+<img src="assets/iso-blanco.png" alt="" aria-hidden="true" style="position: absolute; right: -6%; bottom: -10%; width: 42%; height: auto; opacity: 0.16">
+
+<h2 aria-label="Cuéntanos tu proyecto" style="position: relative; margin: 0; text-transform: uppercase; font-weight: 800; font-size: min(11.5vw, 190px); line-height: 0.92; letter-spacing: -0.02em; color: #FFFFFF">
+<span style="display: block">Cuéntanos</span>
+<span style="display: block; color: #14F0FF">tu proyecto</span>
+</h2>
+
+<div style="position: relative; display: flex; flex-wrap: wrap; gap: 14px">
+<a class="vc-pill main" href="https://wa.me/584126553528">WhatsApp · +58 412 655 3528
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0A0612" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+<a class="vc-pill" href="mailto:vibraestudioweb@gmail.com">vibraestudioweb@gmail.com
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0A0612" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+<a class="vc-pill" href="https://instagram.com/vibrastudioweb">@vibrastudioweb
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0A0612" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+</div>
+
+</section>
+
+<!-- Detalle de proyecto -->
+<div class="vd-layer" id="vd-layer" role="dialog" aria-modal="true" aria-label="Detalle del proyecto">
+<img class="vd-iso" id="vd-iso" src="assets/iso-blanco.png" alt="" aria-hidden="true">
+<div class="vd-top">
+<span class="vd-brand">VIBRA</span>
+<button class="vd-close" id="vd-close" type="button">Cerrar <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+</div>
+<div class="vd-body">
+<div class="vd-copy">
+<h2 class="vd-name" id="vd-name"></h2>
+<p class="vd-sub" id="vd-sub"></p>
+<p class="vd-cap" id="vd-cap"><span class="vd-tag">Prototipo</span><span id="vd-captext"></span></p>
+<p class="vd-desc" id="vd-desc"></p>
+<a class="vd-cta" id="vd-cta" href="#" target="_blank" rel="noopener"></a>
+</div>
+<div class="vd-shot" id="vd-shot">
+<img class="vd-img" id="vd-img" src="" alt="">
+<div class="vd-shade" id="vd-shade"></div>
+<div class="vd-win" id="vd-win" aria-hidden="true">
+<div class="vd-bar"><i></i><i></i><i></i><span class="vd-addr" id="vd-addr"></span></div>
+<div class="vd-page">
+<div class="vd-hero">
+<div class="vd-lines"><b></b><b></b><b class="s"></b><u id="vd-u"></u></div>
+<div class="vd-art"></div>
+</div>
+<div class="vd-cards"><div></div><div></div><div></div></div>
+</div>
+</div>
+<div class="vd-dots" id="vd-dots"></div>
+<span class="vd-label" id="vd-label"></span>
+<a class="vd-visit" id="vd-visit" href="#" target="_blank" rel="noopener">Ver sitio &#8599;</a>
+</div>
+</div>
+</div>
+
+<!-- Footer -->
+<footer class="vf" id="pie">
+<div class="vf-in">
+<div class="vf-credit">&copy; 2026 <b>VIBRA</b> &middot; Valera, Venezuela</div>
+<a class="vf-link" href="https://instagram.com/vibrastudioweb">Instagram</a>
+<button class="vf-link vf-top" id="btn-top" type="button"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h14M12 20V9M6 14l6-6 6 6"/></svg>Volver arriba</button>
+<a class="vf-link" href="https://wa.me/584126553528">WhatsApp</a>
+<button class="vf-link vf-boom" id="btn-boom" type="button">NO me toques<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="6" height="6"/><rect x="15" y="3" width="6" height="6"/><rect x="9" y="9" width="6" height="6"/><rect x="3" y="15" width="6" height="6"/><rect x="15" y="15" width="6" height="6"/></svg></button>
+</div>
+</footer>
+
+<!-- Desintegración total -->
+<div class="vx-layer" id="vx-layer">
+<canvas class="vx-cv" aria-hidden="true"></canvas>
+<button class="vx-refresh" id="vx-refresh" type="button">Refrescar <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v5h-5"/></svg></button>
+</div>
+
+<!-- Barra inferior (móvil) -->
+<nav class="vt-bar" aria-label="Navegación principal">
+<button class="vt-tab" id="tab-inicio" type="button" aria-current="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg><span>Inicio</span></button>
+<button class="vt-tab" id="tab-trabajo" type="button" aria-current="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/></svg><span>Trabajo</span></button>
+<button class="vt-tab" id="tab-contacto" type="button" aria-current="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><span>Contacto</span></button>
+</nav>
+
+<!-- Menú de navegación -->
+<div class="vn-layer" id="vn-layer">
+<button class="vn-backdrop" id="vn-backdrop" type="button" tabindex="-1" aria-label="Cerrar menú"></button>
+<nav class="vn-panel" id="vn-panel" aria-label="Principal">
+<div class="vn-top">
+<button class="vn-close" id="vn-close" type="button">Cerrar <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0A0612" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+</div>
+<div class="vn-links">
+<a class="vn-item" href="#inicio">Inicio<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+<a class="vn-item" href="#trabajo">Trabajo<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+<a class="vn-item" href="#contacto">Contacto<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+</div>
+<div class="vn-foot">
+<div><span class="vn-lbl">WhatsApp</span><a href="https://wa.me/584126553528">+58 412 655 3528</a></div>
+<div><span class="vn-lbl">Correo</span><a href="mailto:vibraestudioweb@gmail.com">vibraestudioweb@gmail.com</a></div>
+<div><span class="vn-lbl">Estudio</span>Valera, Trujillo · Venezuela</div>
+<div class="vn-social"><a href="https://instagram.com/vibrastudioweb">Instagram</a></div>
+</div>
+</nav>
+</div>
+
+
+<script src="js/app.js"></script>
+</body>
+</html>
