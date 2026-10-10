@@ -368,6 +368,7 @@ if (i >= 0 && i < N) set({ index: i });
 render();
 syncFromScroll();
 buildPixels();
+window.VIBRA = { items: items, open: function (i) { set({ index: i, shot: 0 }); openDetail(); }, close: function () { closeZoom(); closeDetail(); }, boom: boom, reset: reset };
 if ('serviceWorker' in navigator && location.protocol !== 'file:') {
 window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
 }
