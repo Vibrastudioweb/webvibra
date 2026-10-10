@@ -99,6 +99,8 @@ if (n) { var src = it.shots[sh]; if (img.getAttribute('src') !== src) img.setAtt
 else { img.removeAttribute('src'); img.alt = ''; }
 img.style.display = n ? 'block' : 'none';
 img.style.objectFit = it.fit || 'cover';
+$('vd-shot').setAttribute('data-fit', it.fit || 'cover');
+$('vd-zoom').style.display = n ? 'inline-flex' : 'none';
 $('vd-shade').style.display = it.fit ? 'none' : (n ? 'block' : 'none');
 $('vd-win').style.display = n ? 'none' : 'flex';
 $('vd-addr').textContent = it.host;
@@ -326,6 +328,12 @@ buildCards();
 $('vg-prev').addEventListener('click', function () { goTo(Math.max(0, S.index - 1)); });
 $('vg-next').addEventListener('click', function () { goTo(Math.min(N - 1, S.index + 1)); });
 $('vd-close').addEventListener('click', closeDetail);
+function openZoom() { var it = items[S.index]; if (!it.shots.length) return; var sh = Math.min(S.shot, it.shots.length - 1); var im = $('vl-img'); im.src = it.shots[sh]; im.alt = it.alts[sh]; $('vl-layer').classList.add('is-open'); setTimeout(function () { $('vl-close').focus(); }, 50); }
+function closeZoom() { $('vl-layer').classList.remove('is-open'); }
+$('vd-zoom').addEventListener('click', openZoom);
+$('vd-img').addEventListener('click', openZoom);
+$('vl-close').addEventListener('click', closeZoom);
+$('vl-layer').addEventListener('click', function (e) { if (e.target.id !== 'vl-img') closeZoom(); });
 $('btn-menu').addEventListener('click', function () { set({ menuOpen: true }); });
 $('vn-close').addEventListener('click', function () { set({ menuOpen: false }); });
 $('vn-backdrop').addEventListener('click', function () { set({ menuOpen: false }); });
@@ -339,7 +347,7 @@ $('tab-contacto').addEventListener('click', function () { goSection('contacto');
 window.addEventListener('scroll', onScroll, { passive: true });
 window.addEventListener('resize', function () { drawn = -1; onScroll(); });
 window.addEventListener('keydown', function (e) {
-if (e.key === 'Escape') { if (S.detail) closeDetail(); else if (S.menuOpen) set({ menuOpen: false }); }
+if (e.key === 'Escape') { if ($('vl-layer').classList.contains('is-open')) closeZoom(); else if (S.detail) closeDetail(); else if (S.menuOpen) set({ menuOpen: false }); }
 });
 var tx = 0, ty = 0, tOn = false;
 document.addEventListener('touchstart', function (e) {
