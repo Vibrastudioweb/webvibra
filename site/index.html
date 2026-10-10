@@ -20,8 +20,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,700..800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/app.css">
+<script>(function(){try{var d=document.documentElement;if(matchMedia('(max-width:720px)').matches){d.classList.add('app');var rm=matchMedia('(prefers-reduced-motion: reduce)').matches,seen=false;try{seen=sessionStorage.getItem('vibra-splash')==='1'}catch(e){}if(!seen&&!rm){d.classList.add('splash');try{sessionStorage.setItem('vibra-splash','1')}catch(e){}}setTimeout(function(){if(!d.classList.contains('app-ready'))d.classList.remove('app','splash','splash-out')},4000)}}catch(e){}})()</script>
 </head>
 <body>
+<div id="am-splash" aria-hidden="true"><img class="sp-logo" src="assets/logo-blanco.png" alt=""></div>
 
 <!-- Bloque 1: hero -->
 <div id="inicio" class="vh-scroll" style="height: 300vh">
@@ -41,7 +44,7 @@
 </div>
 
 <!-- Bloque 2: mensaje -->
-<div style="position: relative; width: 100%; min-height: 100vh; overflow: hidden; background: #FF1FC8; display: flex; align-items: center; justify-content: center; padding: 120px 24px; box-sizing: border-box">
+<div class="vm-msg" style="position: relative; width: 100%; min-height: 100vh; overflow: hidden; background: #FF1FC8; display: flex; align-items: center; justify-content: center; padding: 120px 24px; box-sizing: border-box">
 
 <h2 aria-label="Construimos marcas que funcionan." style="margin: 0; text-align: center; text-transform: uppercase; font-weight: 800; font-size: min(12vw, 200px); line-height: 0.92; letter-spacing: -0.02em; color: #FFFFFF">
 <span style="display: block">Construimos</span>
@@ -180,5 +183,6 @@
 
 
 <script src="js/app.js"></script>
+<script src="js/app-mobile.js"></script>
 </body>
 </html>
