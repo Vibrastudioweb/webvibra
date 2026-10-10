@@ -12,9 +12,9 @@ body{margin:0}
 75%,95%{transform:translateZ(-.46em) rotateX(-270deg)}
 100%{transform:translateZ(-.46em) rotateX(-360deg)}
 }
-.vibra-slot{display:block;position:relative;width:6.6em;height:.92em;margin:0 auto;perspective:1800px}
-.vibra-cube{position:absolute;top:0;right:0;bottom:0;left:0;transform-style:preserve-3d;transform:translateZ(-.46em);animation:vibraCube 6s cubic-bezier(.6,0,.3,1) infinite}
-.vibra-face{position:absolute;top:0;right:0;bottom:0;left:0;display:flex;align-items:center;justify-content:center;text-align:center;white-space:nowrap;line-height:.92;color:#14F0FF;backface-visibility:hidden}
+.vibra-slot{display:block;position:relative;width:6.6em;height:.92em;margin:0 auto;-webkit-perspective:1800px;perspective:1800px}
+.vibra-cube{position:absolute;top:0;right:0;bottom:0;left:0;-webkit-transform-style:preserve-3d;transform-style:preserve-3d;transform:translateZ(-.46em);animation:vibraCube 6s cubic-bezier(.6,0,.3,1) infinite}
+.vibra-face{position:absolute;top:0;right:0;bottom:0;left:0;display:flex;align-items:center;justify-content:center;text-align:center;white-space:nowrap;line-height:.92;color:#14F0FF;-webkit-backface-visibility:hidden;backface-visibility:hidden}
 .vibra-face.f1{transform:rotateX(0deg) translateZ(.46em)}
 .vibra-face.f2{transform:rotateX(90deg) translateZ(.46em)}
 .vibra-face.f3{transform:rotateX(180deg) translateZ(.46em);font-size:.95em}
