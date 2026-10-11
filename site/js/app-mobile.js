@@ -27,12 +27,19 @@ var SERVICES = [
 { id: 'apps', t: 'Apps y PWA a medida', ic: '<rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18h2"/>', d: 'Apps que se instalan desde el navegador y funcionan en cualquier teléfono, hechas a la medida de tu negocio.', need: 'App o PWA a medida' },
 { id: 'sistemas', t: 'Sistemas para negocios', ic: '<path d="M4 20h16M7 20v-8M12 20V6M17 20v-5"/>', d: 'Paneles y herramientas para ordenar tu operación: ventas, citas, pedidos o reparto, con información que puedes usar a diario.', need: 'Sistema para mi negocio' }
 ];
-var STEPS = [
-['Escuchamos', 'Hablamos de tu negocio, tu meta y tu presupuesto.'],
-['Proponemos', 'Te mostramos una propuesta clara con alcance, tiempo y precio.'],
-['Construimos', 'Diseñamos y desarrollamos, con avances que puedes ver y comentar.'],
-['Lanzamos', 'Publicamos, te acompañamos y ajustamos lo que haga falta.']
-];
+/* Método VIBRA: nombre del paso, frase, color de acento y color del número */
+var METODO = {
+title: 'Cómo trabajamos',
+sub: 'Un ciclo de 5 pasos para que tu proyecto funcione de verdad, y no solo se vea bien.',
+steps: [
+['VER', 'Entendemos tu negocio y el problema real antes de proponer nada.', '#14F0FF', '#0A0612'],
+['INVESTIGAR', 'Cambiamos las suposiciones por evidencia: tus clientes, tu competencia, tus números.', '#FF1FC8', '#0A0612'],
+['BLUEPRINT', 'Diseñamos la solución y decidimos qué dejar para después. Te presentamos una propuesta clara con alcance, tiempo y precio.', '#7B2FF7', '#FFFFFF'],
+['REALIZAR', 'Construimos lo acordado, con avances que puedes ver y comentar.', '#14F0FF', '#0A0612'],
+['ACELERAR', 'Medimos, aprendemos y mejoramos primero lo que más pesa.', '#FF1FC8', '#0A0612']
+],
+close: 'Y volvemos a empezar: cada ciclo parte de lo que aprendimos en el anterior.'
+};
 var NEEDS = ['Branding e identidad', 'Sitio web', 'App o PWA a medida', 'Sistema para mi negocio', 'Aún no lo sé'];
 var STAGES = ['Solo estoy explorando', 'Tengo una idea y quiero empezar pronto', 'Lo necesito con urgencia'];
 
@@ -52,6 +59,7 @@ ig: '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r=
 pin: '<path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>',
 install: '<path d="M12 4v11M7 11l5 5 5-5M5 20h14"/>',
 share: '<path d="M12 15V3M8 7l4-4 4 4M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/>',
+loop: '<path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v5h-5"/>',
 boom: '<rect x="3" y="3" width="6" height="6"/><rect x="15" y="3" width="6" height="6"/><rect x="9" y="9" width="6" height="6"/><rect x="3" y="15" width="6" height="6"/><rect x="15" y="15" width="6" height="6"/>'
 };
 function svgRaw(path, extra) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"' + (extra || '') + '>' + path + '</svg>'; }
@@ -275,7 +283,11 @@ row('ig', '@vibrastudioweb', 'href="https://instagram.com/vibrastudioweb" target
 '<div class="am-row static"><span class="am-tic">' + svg('pin') + '</span><span class="am-rt">Valera, Trujillo · Venezuela</span></div></div>' +
 '<button class="am-cta" type="button" data-act="cotizar">Cotizar proyecto ' + svg('arrow') + '</button>',
 { tab: 'contacto' });
-makeSheet('proceso', 'Proceso', '<ol class="am-steps">' + STEPS.map(function (s, i) { return '<li><span class="am-n">' + (i + 1) + '</span><div><b>' + s[0] + '</b><p>' + s[1] + '</p></div></li>'; }).join('') + '</ol><button class="am-cta" type="button" data-act="cotizar">Cotizar proyecto ' + svg('arrow') + '</button>', { tab: '' });
+makeSheet('proceso', METODO.title,
+'<p class="am-lead">' + METODO.sub + '</p>' +
+'<ol class="am-steps" role="list" aria-label="Método VIBRA, 5 pasos">' + METODO.steps.map(function (st, i) { return '<li style="--ac:' + st[2] + ';--ac-fg:' + st[3] + '"><span class="am-n" aria-hidden="true">' + (i + 1) + '</span><div><b><span class="am-vh">Paso ' + (i + 1) + ': </span>' + st[0] + '</b><p>' + st[1] + '</p></div></li>'; }).join('') + '</ol>' +
+'<div class="am-cycle" role="note"><span class="am-loop" aria-hidden="true">' + svg('loop') + '</span><p>' + METODO.close + '</p></div>' +
+'<button class="am-cta" type="button" data-act="cotizar">Cotizar proyecto ' + svg('arrow') + '</button>', { tab: '' });
 makeSheet('cotizar', 'Cotizar proyecto', '', { tab: '', onOpen: renderWizard });
 makeSheet('mas', 'Más',
 '<div class="am-svc">' +

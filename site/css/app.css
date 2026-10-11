@@ -92,11 +92,21 @@ html.app .am-row.danger .am-tic{background:rgba(255,31,200,.16);color:var(--mg)}
 html.app .am-rt{min-width:0;overflow-wrap:anywhere}
 html.app .am-desc{margin:0 0 20px;font-size:18px;font-weight:500;line-height:1.45;color:#F0E6FF}
 html.app .am-desc .inl{display:inline-block;width:18px;height:18px;vertical-align:-3px;color:var(--cy)}
-html.app .am-steps{list-style:none;margin:0 0 20px;padding:0;display:flex;flex-direction:column;gap:12px}
-html.app .am-steps li{display:flex;gap:14px;padding:14px;border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.05)}
-html.app .am-steps b{display:block;font-size:19px;font-weight:800;margin-bottom:2px}
-html.app .am-steps p{margin:0;font-size:15.5px;line-height:1.4;color:#E4C2FA;font-weight:500}
-html.app .am-n{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;flex:none;border-radius:50%;background:linear-gradient(100deg,var(--cy),var(--mg));color:var(--ink);font-weight:800}
+/* Método VIBRA: lista vertical con número, línea conectora y cierre en ciclo */
+html.app .am-steps{list-style:none;margin:6px 0 0;padding:0}
+html.app .am-steps li{position:relative;display:flex;gap:16px;padding:0 0 22px}
+html.app .am-steps li::before{content:'';position:absolute;left:17px;top:40px;bottom:2px;width:2px;border-radius:1px;background:var(--ac);opacity:.5}
+html.app .am-n{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;flex:none;border-radius:50%;background:var(--ac);color:var(--ac-fg);font-size:17px;font-weight:800}
+html.app .am-steps b{display:block;margin-bottom:3px;font-size:20px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;line-height:1.15;color:var(--ac)}
+html.app .am-steps p{margin:0;font-size:16.5px;line-height:1.42;font-weight:500;color:#fff}
+html.app .am-cycle{display:flex;align-items:flex-start;gap:16px;margin:0 0 22px}
+html.app .am-loop{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;flex:none;border-radius:50%;border:2px solid var(--cy);color:var(--cy)}
+html.app .am-loop svg{width:20px;height:20px}
+html.app .am-cycle p{margin:0;padding-top:5px;font-size:16.5px;line-height:1.42;font-weight:700;color:#E4C2FA}
+html.app .am-sheet.open .am-loop svg{animation:amLoop 9s linear infinite}
+@keyframes amLoop{to{transform:rotate(-360deg)}}
+html.app .am-vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+html.app .am-body{scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
 
 /* asistente */
 html.app .am-step{margin:0 0 8px;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--cy)}
@@ -189,6 +199,8 @@ html.app .am-flat .vg-card.pos-m1{transform:translate(calc(-50% - 104%),-50%) sc
 html.app .am-flat .vg-card.pos-p2{transform:translate(calc(-50% + 208%),-50%) scale(.86)}
 html.app .am-flat .vg-card.pos-m2{transform:translate(calc(-50% - 208%),-50%) scale(.86)}
 @media (prefers-reduced-motion: reduce){
+html.app .am-sheet.open .am-loop svg{animation:none}
+html.app .am-body{scroll-behavior:auto}
 html.app .vg-card,html.app .vg-info,html.app .am-glow i,html.app .am-dot i{transition:none !important}
 html.app .am-snap{scroll-behavior:auto}
 }
