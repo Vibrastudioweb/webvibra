@@ -170,6 +170,7 @@ grab.addEventListener('pointercancel', end);
 function setView(name) {
 view = name;
 Array.prototype.forEach.call(rootEl.querySelectorAll('.am-view'), function (v) { v.classList.toggle('on', v.getAttribute('data-view') === name); });
+if (name === 'portafolio' && gal.built) { flatCheck(); scrollGallery(V.index(), false); galleryOn(V.index()); }
 window.scrollTo(0, 0);
 setTab();
 }
@@ -256,7 +257,7 @@ rootEl.innerHTML =
 '<section class="am-view" data-view="portafolio">' +
 '<header class="am-top"><img src="assets/iso-gradiente.png" alt="" aria-hidden="true"><span class="am-brand">Portafolio</span></header>' +
 '<p class="am-lead">Trabajo real: marcas, sitios y sistemas.</p>' +
-'<div class="am-list">' + cards.replace(/class="am-card"/g, 'class="am-card wide"') + '</div>' + foot +
+'<div id="am-gal"></div>' + foot +
 '</section>' +
 '<nav class="am-bar" aria-label="Navegación principal">' +
 ['inicio:Inicio', 'portafolio:Portafolio', 'servicios:Servicios', 'contacto:Contacto', 'mas:Más'].map(function (x) { var p = x.split(':'); return '<button class="am-tab" type="button" data-tab="' + (p[0] === 'mas' ? 'mas' : p[0]) + '" aria-current="false">' + svg(p[0]) + '<span>' + p[1] + '</span></button>'; }).join('') + '</nav>' +
@@ -343,8 +344,90 @@ document.addEventListener('visibilitychange', function () { mani.classList.toggl
 updateInstall();
 setTab();
 try { history.replaceState({ vl: 0 }, ''); } catch (e) {}
+setupGallery();
 root.classList.add('app-ready');
 }
+
+/* ---- galería 3D del Portafolio: reutiliza #trabajo (S/goTo/render de app.js) ---- */
+/* color de acento, texto sobre el acento, resplandor, velo medio y velo superior (más fuerte en las capturas claras) */
+var ACC = { 'Conxulty': ['#7B2FF7', '#FFFFFF', 'vi', .5, .38], 'La Feria': ['#FF1FC8', '#0A0612', 'mg', .76, .7], 'MANDAO': ['#14F0FF', '#0A0612', 'cy', .4, .3], 'Almas & Células': ['#FF1FC8', '#0A0612', 'mg', .7, .64], 'CUADRAO': ['#14F0FF', '#0A0612', 'cy', .5, .4], 'Apps a medida': ['#7B2FF7', '#FFFFFF', 'vi', .5, .4] };
+var gal = { built: false, home: null, snap: null, prog: 0, user: 0, raf: 0, last: -1, mv: 0 };
+function gw() { var c = gal.snap && gal.snap.firstChild; return (c && c.getBoundingClientRect().width) || 1; }
+function flatCheck() {
+var t = $('trabajo'); if (!t) return;
+var flat = reduce() || !(window.CSS && CSS.supports && CSS.supports('transform-style', 'preserve-3d'));
+t.classList.toggle('am-flat', flat);
+}
+function scrollGallery(i, smooth) {
+if (!gal.snap || !gal.snap.offsetWidth) return;
+var target = i * gw();
+if (Math.abs(gal.snap.scrollLeft - target) < 2) return;
+gal.prog = performance.now() + (smooth ? 800 : 150);
+try { gal.snap.scrollTo({ left: target, behavior: smooth && !reduce() ? 'smooth' : 'auto' }); } catch (e) { gal.snap.scrollLeft = target; }
+}
+function galleryOn(i) {
+if (!gal.built) return;
+var t = $('trabajo'), items = V.items, a = ACC[items[i].name] || ACC['Conxulty'];
+t.querySelector('.vg-section').setAttribute('data-glow', a[2]);
+Array.prototype.forEach.call(t.querySelectorAll('.am-dot'), function (d, j) { d.classList.toggle('on', j === i); d.setAttribute('aria-current', j === i ? 'true' : 'false'); });
+Array.prototype.forEach.call(gal.snap.children, function (b, j) { b.tabIndex = j === i ? 0 : -1; b.setAttribute('aria-label', (j === i ? 'Ver proyecto ' : 'Mostrar proyecto ') + items[j].name + ', ' + (j + 1) + ' de ' + items.length); });
+var st = $('vg-stage'); st.classList.add('am-moving'); clearTimeout(gal.mv); gal.mv = setTimeout(function () { st.classList.remove('am-moving'); }, 700);
+if (performance.now() - gal.user > 220) scrollGallery(i, gal.last >= 0 && Math.abs(i - gal.last) === 1);
+gal.last = i;
+}
+function openCard(i) {
+var el = document.querySelector('#vg-stage .vg-card.pos-0');
+openProject(i, el);
+}
+function setupGallery() {
+var t = $('trabajo'), host = $('am-gal'); if (!t || !host || !V) return;
+if (!gal.home) gal.home = { parent: t.parentNode, next: t.nextSibling };
+if (t.parentNode !== host) host.appendChild(t);
+var sec = t.querySelector('.vg-section'), items = V.items;
+if (!gal.built) {
+gal.built = true;
+var cards = $('vg-stage').querySelectorAll('.vg-card');
+items.forEach(function (it, i) { var a = ACC[it.name] || ACC['Conxulty']; cards[i].style.setProperty('--acc', a[0]); cards[i].style.setProperty('--acc-fg', a[1]); cards[i].style.setProperty('--vm', a[3]); cards[i].style.setProperty('--vt', a[4]); var im = cards[i].querySelector('.vg-bg'); if (im) { im.loading = 'eager'; if (im.decode) im.decode().catch(function () {}); } });
+var glow = h('div', 'am-glow'); glow.setAttribute('aria-hidden', 'true'); glow.innerHTML = '<i class="g-cy"></i><i class="g-mg"></i><i class="g-vi"></i>';
+sec.insertBefore(glow, sec.firstChild);
+var snap = h('div', 'am-snap'); snap.setAttribute('role', 'group'); snap.setAttribute('aria-label', 'Proyectos del portafolio, desliza para cambiar');
+items.forEach(function (it, i) { var b = h('button', 'am-snapi'); b.type = 'button'; b.setAttribute('data-g', i); snap.appendChild(b); });
+sec.appendChild(snap); gal.snap = snap;
+var dots = h('div', 'am-dots');
+items.forEach(function (it, i) { var d = h('button', 'am-dot', '<i></i>'); d.type = 'button'; d.setAttribute('data-g', i); d.setAttribute('aria-label', 'Ir al proyecto ' + (i + 1) + ' de ' + items.length + ': ' + it.name); dots.appendChild(d); });
+sec.appendChild(dots);
+dots.addEventListener('click', function (e) { var d = e.target.closest && e.target.closest('.am-dot'); if (d) { vib(6); V.go(+d.getAttribute('data-g')); } });
+snap.addEventListener('scroll', function () {
+if (performance.now() < gal.prog) return;
+gal.user = performance.now();
+if (gal.raf) return;
+gal.raf = requestAnimationFrame(function () { gal.raf = 0; var i = Math.max(0, Math.min(items.length - 1, Math.round(snap.scrollLeft / gw()))); if (i !== V.index()) { V.go(i); } });
+}, { passive: true });
+snap.addEventListener('click', function (e) {
+var cur = V.index(), N = items.length, child = e.target.closest && e.target.closest('.am-snapi');
+if (e.detail === 0 && child) { var j = +child.getAttribute('data-g'); if (j === cur) openCard(cur); else V.go(j); return; }
+var r = snap.getBoundingClientRect(), dx = e.clientX - (r.left + r.width / 2);
+if (Math.abs(dx) <= gw() / 2) openCard(cur);
+else { vib(6); V.go((cur + (dx < 0 ? -1 : 1) + N) % N); }
+});
+snap.addEventListener('keydown', function (e) {
+if (e.key === 'ArrowRight') { e.preventDefault(); var n1 = Math.min(items.length - 1, V.index() + 1); V.go(n1); snap.children[n1].focus({ preventScroll: true }); }
+else if (e.key === 'ArrowLeft') { e.preventDefault(); var n2 = Math.max(0, V.index() - 1); V.go(n2); snap.children[n2].focus({ preventScroll: true }); }
+});
+window.VIBRA_ON = galleryOn;
+}
+flatCheck();
+galleryOn(V.index());
+scrollGallery(V.index(), false);
+}
+function releaseGallery() {
+var t = $('trabajo');
+if (t && gal.home && t.parentNode !== gal.home.parent) {
+if (gal.home.next && gal.home.next.parentNode === gal.home.parent) gal.home.parent.insertBefore(t, gal.home.next); else gal.home.parent.appendChild(t);
+}
+}
+if (rmq.addEventListener) rmq.addEventListener('change', flatCheck);
+
 
 /* ---- instalar ---- */
 function standalone() { return (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true; }
@@ -384,8 +467,8 @@ setTimeout(out, 1200);
 
 /* ---- activar / desactivar según el ancho ---- */
 function sync() {
-if (mq.matches) { root.classList.add('app'); build(); }
-else { root.classList.remove('app', 'splash', 'splash-out'); }
+if (mq.matches) { root.classList.add('app'); build(); setupGallery(); }
+else { root.classList.remove('app', 'splash', 'splash-out'); releaseGallery(); }
 }
 function init() {
 sync();
