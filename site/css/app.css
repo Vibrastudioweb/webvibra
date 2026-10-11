@@ -24,10 +24,9 @@ html.app .am-top{display:flex;align-items:center;gap:10px;padding:calc(18px + en
 html.app .am-top img{height:30px;width:auto}
 html.app .am-brand{font-size:22px;font-weight:800;letter-spacing:-.01em}
 html.app .am-loc{margin-left:auto;font-size:13px;font-weight:700;color:#E4C2FA;letter-spacing:.02em}
-html.app .am-hero{padding:22px 20px 8px}
-html.app .am-kicker{margin:0 0 10px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--cy)}
-html.app .am-h1{margin:0 0 22px;font-size:clamp(40px,12.6vw,56px);line-height:.94;font-weight:800;text-transform:uppercase;letter-spacing:-.02em}
-html.app .am-h1 em{font-style:normal;color:var(--cy)}
+html.app .am-hero{padding:16px 20px 0}
+html.app .am-actions{padding:14px 20px 0}
+html.app .am-kicker{margin:0;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--cy)}
 html.app .am-lead{margin:6px 20px 16px;font-size:17px;font-weight:600;color:#E4C2FA}
 html.app .am-cta{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:56px;padding:0 24px;border:0;border-radius:999px;background:linear-gradient(100deg,var(--cy),var(--mg));color:var(--ink);font-size:19px;font-weight:800;text-decoration:none;cursor:pointer;box-shadow:0 10px 30px rgba(255,31,200,.28)}
 html.app .am-cta svg{width:22px;height:22px}
