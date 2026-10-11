@@ -58,18 +58,6 @@ html.app .am-mgo{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;heig
 html.app .am-mgo:focus-visible{outline:3px solid var(--ink);outline-offset:-8px;border-radius:24px}
 html.app .am-mani.off .vibra-cube,html.app .am-mani.hid .vibra-cube{animation-play-state:paused}
 
-/* destacados */
-html.app .am-sec{display:flex;align-items:baseline;justify-content:space-between;padding:26px 20px 12px}
-html.app .am-sec h2{margin:0;font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:.01em}
-html.app .am-count{font-size:14px;font-weight:800;color:#E4C2FA}
-html.app .am-rail{display:flex;gap:12px;overflow-x:auto;padding:0 20px 6px;scroll-snap-type:x mandatory;scroll-padding:0 20px;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-html.app .am-rail::-webkit-scrollbar{display:none}
-html.app .am-card{position:relative;flex:none;width:76vw;max-width:320px;aspect-ratio:4/5;padding:0;border:0;border-radius:24px;overflow:hidden;background:var(--panel);color:#fff;text-align:left;scroll-snap-align:start;cursor:pointer}
-html.app .am-card img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:30% top}
-html.app .am-tint{position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to top,rgba(10,6,18,.95) 10%,rgba(10,6,18,.5) 55%,rgba(10,6,18,.58))}
-html.app .am-cname{position:absolute;left:16px;right:16px;bottom:52px;font-size:30px;font-weight:800;line-height:.95;text-transform:uppercase;letter-spacing:-.02em}
-html.app .am-cpill{position:absolute;left:16px;bottom:14px;padding:7px 14px;border-radius:999px;background:var(--cy);color:var(--ink);font-size:13px;font-weight:700}
-html.app .am-card:active{transform:scale(.985)}
 html.app .am-foot{margin:28px 20px 0;font-size:13px;font-weight:500;color:#E4C2FA;opacity:.8}
 html.app .am-foot b{font-weight:800}
 
@@ -147,7 +135,6 @@ html.app .vl-layer{z-index:400}
 html.app .am-view.on{animation:none}
 html.app .am-panel,html.app .am-backdrop,html.app .am-toast,html.app #am-splash,html.app .vd-layer{transition:none !important}
 html.app #am-splash .sp-logo{animation:none}
-html.app .am-rail{scroll-behavior:auto}
 }
 
 

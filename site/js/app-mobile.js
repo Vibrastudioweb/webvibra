@@ -14,7 +14,6 @@ var mq = window.matchMedia('(max-width:720px)');
 var rmq = window.matchMedia('(prefers-reduced-motion: reduce)');
 var built = false, rootEl = null, V = null;
 var layers = [], sheets = {}, lastSrc = null, view = 'inicio', deferred = null;
-var rail = null;
 
 function $(id) { return document.getElementById(id); }
 function h(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
@@ -232,11 +231,8 @@ if (built) return;
 V = window.VIBRA; if (!V) return;
 built = true;
 rootEl = h('div', 'am-root'); rootEl.id = 'am-root';
-var items = V.items, nn = String(items.length).padStart(2, '0');
+var items = V.items;
 
-var cards = items.map(function (it, i) {
-return '<button class="am-card" type="button" data-i="' + i + '" aria-label="Ver proyecto ' + it.name + '"><img src="' + it.shots[0] + '" alt="" loading="' + (i < 2 ? 'eager' : 'lazy') + '" decoding="async"><span class="am-tint"></span><span class="am-cname">' + it.name + '</span><span class="am-cpill">' + it.tag + '</span></button>';
-}).join('');
 var tile = function (act, label, ic) { return '<button class="am-tile" type="button" data-act="' + act + '"><span class="am-tic">' + svg(ic) + '</span><span class="am-tl">' + label + '</span></button>'; };
 var foot = '<p class="am-foot">&copy; 2026 <b>VIBRA</b> &middot; Valera, Trujillo &middot; Venezuela</p>';
 var row = function (ic, label, attrs) { return '<a class="am-row" ' + attrs + '><span class="am-tic">' + svg(ic) + '</span><span class="am-rt">' + label + '</span>' + svg('arrow') + '</a>'; };
@@ -251,8 +247,7 @@ rootEl.innerHTML =
 '<button class="am-install" type="button" data-act="instalar" hidden>' + svg('install') + 'Instalar VIBRA</button>' +
 '</div>' +
 '<div class="am-tiles">' + tile('portafolio', 'Portafolio', 'portafolio') + tile('servicios', 'Servicios', 'servicios') + tile('proceso', 'Proceso', 'proceso') + tile('contacto', 'Contacto', 'contacto') + '</div>' +
-'<div class="am-sec"><h2>Destacados</h2><span class="am-count" id="am-count" aria-hidden="true">01 / ' + nn + '</span></div>' +
-'<div class="am-rail" id="am-rail">' + cards + '</div>' + foot +
+foot +
 '</section>' +
 '<section class="am-view" data-view="portafolio">' +
 '<header class="am-top"><img src="assets/iso-gradiente.png" alt="" aria-hidden="true"><span class="am-brand">Portafolio</span></header>' +
@@ -293,10 +288,9 @@ makeSheet('ios', 'Instalar VIBRA',
 '<p class="am-desc">En iPhone o iPad: toca <b>Compartir</b> ' + svg('share', ' class="inl"') + ' y luego <b>Agregar a inicio</b>.</p>', { tab: 'mas' });
 
 rootEl.addEventListener('click', function (e) {
-var t = e.target.closest && e.target.closest('[data-tab],[data-act],[data-i],[data-svc],[data-quote],[data-need],[data-stage],[data-wback]');
+var t = e.target.closest && e.target.closest('[data-tab],[data-act],[data-svc],[data-quote],[data-need],[data-stage],[data-wback]');
 if (!t || !rootEl.contains(t)) return;
 if (t.hasAttribute('data-tab')) { goTab(t.getAttribute('data-tab')); return; }
-if (t.hasAttribute('data-i')) { openProject(+t.getAttribute('data-i'), t); return; }
 if (t.hasAttribute('data-svc')) { openSheet('servicio', t.getAttribute('data-svc')); return; }
 if (t.hasAttribute('data-quote')) { var need = t.getAttribute('data-quote'); later(function () { openWizard(need); }); return; }
 if (t.hasAttribute('data-need')) { W.need = t.getAttribute('data-need'); W.step = 2; vib(6); renderWizard(); return; }
@@ -319,20 +313,6 @@ if (!mq.matches || !layers.some(function (l) { return l.name === 'detail'; })) r
 e.stopImmediatePropagation(); closeTop();
 }, true);
 drag($('vd-layer'), document.querySelector('.vd-top'), function () { closeTop(); });
-
-/* riel de destacados */
-rail = $('am-rail');
-var cnt = $('am-count'), ticking = false;
-rail.addEventListener('scroll', function () {
-if (ticking) return; ticking = true;
-requestAnimationFrame(function () {
-ticking = false;
-var c = rail.querySelector('.am-card'); if (!c) return;
-var step = c.getBoundingClientRect().width + 12;
-var i = Math.max(0, Math.min(items.length - 1, Math.round(rail.scrollLeft / step)));
-cnt.textContent = String(i + 1).padStart(2, '0') + ' / ' + nn;
-});
-}, { passive: true });
 
 /* tarjeta manifiesto: el cubo se pausa fuera de pantalla o con la pestaña oculta */
 var mani = $('am-mani');
