@@ -293,7 +293,7 @@ makeSheet('mas', 'Más',
 '<div class="am-svc">' +
 '<button class="am-row" type="button" data-act="instalar" hidden><span class="am-tic">' + svg('install') + '</span><span class="am-rt">Instalar VIBRA</span>' + svg('arrow') + '</button>' +
 '<button class="am-row" type="button" data-act="proceso"><span class="am-tic">' + svg('proceso') + '</span><span class="am-rt">Cómo trabajamos</span>' + svg('arrow') + '</button>' +
-row('ig', 'Instagram', 'href="https://instagram.com/vibraink" target="_blank" rel="noopener"') +
+row('ig', '@vibraink', 'href="https://instagram.com/vibraink" target="_blank" rel="noopener"') +
 '</div>' + foot +
 '<div class="am-extra" role="group" aria-label="Extra">' +
 '<button class="am-row danger" type="button" data-act="boom"><span class="am-tic">' + svg('boom') + '</span><span class="am-rt">NO me toques</span>' + svg('arrow') + '</button>' +
