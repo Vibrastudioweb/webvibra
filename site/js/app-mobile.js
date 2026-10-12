@@ -279,7 +279,7 @@ makeSheet('contacto', 'Contacto',
 '<p class="am-lead">Cuéntanos qué necesitas.</p><div class="am-svc">' +
 (WA_NUMBER ? row('wa', 'WhatsApp', 'href="https://wa.me/' + WA_NUMBER + '" target="_blank" rel="noopener"') : '') +
 row('mail', MAIL, 'href="mailto:' + MAIL + '"') +
-row('ig', '@vibrastudioweb', 'href="https://instagram.com/vibrastudioweb" target="_blank" rel="noopener"') +
+row('ig', '@vibraink', 'href="https://instagram.com/vibraink" target="_blank" rel="noopener"') +
 '<div class="am-row static"><span class="am-tic">' + svg('pin') + '</span><span class="am-rt">Valera, Trujillo · Venezuela</span></div></div>' +
 '<button class="am-cta" type="button" data-act="cotizar">Cotizar proyecto ' + svg('arrow') + '</button>',
 { tab: 'contacto' });
@@ -293,8 +293,11 @@ makeSheet('mas', 'Más',
 '<div class="am-svc">' +
 '<button class="am-row" type="button" data-act="instalar" hidden><span class="am-tic">' + svg('install') + '</span><span class="am-rt">Instalar VIBRA</span>' + svg('arrow') + '</button>' +
 '<button class="am-row" type="button" data-act="proceso"><span class="am-tic">' + svg('proceso') + '</span><span class="am-rt">Cómo trabajamos</span>' + svg('arrow') + '</button>' +
-row('ig', 'Instagram', 'href="https://instagram.com/vibrastudioweb" target="_blank" rel="noopener"') +
-'<button class="am-row danger" type="button" data-act="boom"><span class="am-tic">' + svg('boom') + '</span><span class="am-rt">NO me toques</span>' + svg('arrow') + '</button></div>' + foot,
+row('ig', 'Instagram', 'href="https://instagram.com/vibraink" target="_blank" rel="noopener"') +
+'</div>' + foot +
+'<div class="am-extra" role="group" aria-label="Extra">' +
+'<button class="am-row danger" type="button" data-act="boom"><span class="am-tic">' + svg('boom') + '</span><span class="am-rt">NO me toques</span>' + svg('arrow') + '</button>' +
+'</div>',
 { tab: 'mas' });
 makeSheet('ios', 'Instalar VIBRA',
 '<p class="am-desc">En iPhone o iPad: toca <b>Compartir</b> ' + svg('share', ' class="inl"') + ' y luego <b>Agregar a inicio</b>.</p>', { tab: 'mas' });

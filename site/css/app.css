@@ -89,6 +89,8 @@ html.app .am-row>svg{width:20px;height:20px;margin-left:auto;color:var(--cy);fle
 html.app .am-row:active{background:rgba(255,255,255,.1)}
 html.app .am-row.static{cursor:default}
 html.app .am-row.danger .am-tic{background:rgba(255,31,200,.16);color:var(--mg)}
+/* "NO me toques": extra aparte al final de Más, separado de las opciones */
+html.app .am-extra{margin-top:26px;padding-top:22px;border-top:1px dashed rgba(255,255,255,.2)}
 html.app .am-rt{min-width:0;overflow-wrap:anywhere}
 html.app .am-desc{margin:0 0 20px;font-size:18px;font-weight:500;line-height:1.45;color:#F0E6FF}
 html.app .am-desc .inl{display:inline-block;width:18px;height:18px;vertical-align:-3px;color:var(--cy)}
