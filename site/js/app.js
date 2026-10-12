@@ -71,6 +71,7 @@ $('vx-layer').classList.toggle('is-on', S.boom);
 var b = $('tab-' + t); b.classList.toggle('on', S.tab === t); b.setAttribute('aria-current', S.tab === t ? 'page' : 'false');
 });
 renderDetail();
+if (typeof window.VIBRA_ON === 'function') window.VIBRA_ON(S.index);
 }
 
 function renderDetail() {
@@ -368,7 +369,7 @@ if (i >= 0 && i < N) set({ index: i });
 render();
 syncFromScroll();
 buildPixels();
-window.VIBRA = { items: items, open: function (i) { set({ index: i, shot: 0 }); openDetail(); }, close: function () { closeZoom(); closeDetail(); }, boom: boom, reset: reset };
+window.VIBRA = { items: items, open: function (i) { set({ index: i, shot: 0 }); openDetail(); }, close: function () { closeZoom(); closeDetail(); }, boom: boom, reset: reset, go: function (i) { goTo(i); }, index: function () { return S.index; } };
 if ('serviceWorker' in navigator && location.protocol !== 'file:') {
 window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
 }

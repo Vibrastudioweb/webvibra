@@ -2,7 +2,7 @@
 .am-root,#am-splash{display:none}
 
 html.app{--ink:#0A0612;--panel:#140B24;--cy:#14F0FF;--mg:#FF1FC8;--vi:#7B2FF7;--line:rgba(255,255,255,.14)}
-html.app .vh-scroll,html.app .vm-msg,html.app #trabajo,html.app #contacto,html.app .vf,html.app .vt-bar,html.app .vn-layer,html.app .vibra-menu{display:none !important}
+html.app .vh-scroll,html.app .vm-msg,html.app body > #trabajo,html.app #contacto,html.app .vf,html.app .vt-bar,html.app .vn-layer,html.app .vibra-menu{display:none !important}
 html.app,html.app body{background:var(--ink);overscroll-behavior:none}
 html.app.am-lock{overflow:hidden}
 html.app .am-root{display:block;position:relative;min-height:100vh;min-height:100svh;padding:0 0 calc(92px + env(safe-area-inset-bottom,0px));color:#fff;font-family:'Bricolage Grotesque',system-ui,sans-serif;
@@ -58,20 +58,6 @@ html.app .am-mgo{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;heig
 html.app .am-mgo:focus-visible{outline:3px solid var(--ink);outline-offset:-8px;border-radius:24px}
 html.app .am-mani.off .vibra-cube,html.app .am-mani.hid .vibra-cube{animation-play-state:paused}
 
-/* destacados */
-html.app .am-sec{display:flex;align-items:baseline;justify-content:space-between;padding:26px 20px 12px}
-html.app .am-sec h2{margin:0;font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:.01em}
-html.app .am-count{font-size:14px;font-weight:800;color:#E4C2FA}
-html.app .am-rail{display:flex;gap:12px;overflow-x:auto;padding:0 20px 6px;scroll-snap-type:x mandatory;scroll-padding:0 20px;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-html.app .am-rail::-webkit-scrollbar{display:none}
-html.app .am-card{position:relative;flex:none;width:76vw;max-width:320px;aspect-ratio:4/5;padding:0;border:0;border-radius:24px;overflow:hidden;background:var(--panel);color:#fff;text-align:left;scroll-snap-align:start;cursor:pointer}
-html.app .am-card img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:30% top}
-html.app .am-tint{position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to top,rgba(10,6,18,.95) 10%,rgba(10,6,18,.5) 55%,rgba(10,6,18,.58))}
-html.app .am-cname{position:absolute;left:16px;right:16px;bottom:52px;font-size:30px;font-weight:800;line-height:.95;text-transform:uppercase;letter-spacing:-.02em}
-html.app .am-cpill{position:absolute;left:16px;bottom:14px;padding:7px 14px;border-radius:999px;background:var(--cy);color:var(--ink);font-size:13px;font-weight:700}
-html.app .am-card:active{transform:scale(.985)}
-html.app .am-list{display:flex;flex-direction:column;gap:14px;padding:0 20px}
-html.app .am-card.wide{width:100%;max-width:none;aspect-ratio:16/12}
 html.app .am-foot{margin:28px 20px 0;font-size:13px;font-weight:500;color:#E4C2FA;opacity:.8}
 html.app .am-foot b{font-weight:800}
 
@@ -106,11 +92,21 @@ html.app .am-row.danger .am-tic{background:rgba(255,31,200,.16);color:var(--mg)}
 html.app .am-rt{min-width:0;overflow-wrap:anywhere}
 html.app .am-desc{margin:0 0 20px;font-size:18px;font-weight:500;line-height:1.45;color:#F0E6FF}
 html.app .am-desc .inl{display:inline-block;width:18px;height:18px;vertical-align:-3px;color:var(--cy)}
-html.app .am-steps{list-style:none;margin:0 0 20px;padding:0;display:flex;flex-direction:column;gap:12px}
-html.app .am-steps li{display:flex;gap:14px;padding:14px;border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.05)}
-html.app .am-steps b{display:block;font-size:19px;font-weight:800;margin-bottom:2px}
-html.app .am-steps p{margin:0;font-size:15.5px;line-height:1.4;color:#E4C2FA;font-weight:500}
-html.app .am-n{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;flex:none;border-radius:50%;background:linear-gradient(100deg,var(--cy),var(--mg));color:var(--ink);font-weight:800}
+/* Método VIBRA: lista vertical con número, línea conectora y cierre en ciclo */
+html.app .am-steps{list-style:none;margin:6px 0 0;padding:0}
+html.app .am-steps li{position:relative;display:flex;gap:16px;padding:0 0 22px}
+html.app .am-steps li::before{content:'';position:absolute;left:17px;top:40px;bottom:2px;width:2px;border-radius:1px;background:var(--ac);opacity:.5}
+html.app .am-n{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;flex:none;border-radius:50%;background:var(--ac);color:var(--ac-fg);font-size:17px;font-weight:800}
+html.app .am-steps b{display:block;margin-bottom:3px;font-size:20px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;line-height:1.15;color:var(--ac)}
+html.app .am-steps p{margin:0;font-size:16.5px;line-height:1.42;font-weight:500;color:#fff}
+html.app .am-cycle{display:flex;align-items:flex-start;gap:16px;margin:0 0 22px}
+html.app .am-loop{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;flex:none;border-radius:50%;border:2px solid var(--cy);color:var(--cy)}
+html.app .am-loop svg{width:20px;height:20px}
+html.app .am-cycle p{margin:0;padding-top:5px;font-size:16.5px;line-height:1.42;font-weight:700;color:#E4C2FA}
+html.app .am-sheet.open .am-loop svg{animation:amLoop 9s linear infinite}
+@keyframes amLoop{to{transform:rotate(-360deg)}}
+html.app .am-vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+html.app .am-body{scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
 
 /* asistente */
 html.app .am-step{margin:0 0 8px;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--cy)}
@@ -149,5 +145,62 @@ html.app .vl-layer{z-index:400}
 html.app .am-view.on{animation:none}
 html.app .am-panel,html.app .am-backdrop,html.app .am-toast,html.app #am-splash,html.app .vd-layer{transition:none !important}
 html.app #am-splash .sp-logo{animation:none}
-html.app .am-rail{scroll-behavior:auto}
+}
+
+
+/* ---- galería 3D del Portafolio (reutiliza #trabajo y las reglas .vg-* de styles.css) ---- */
+html.app .am-view[data-view=portafolio] #trabajo{display:block}
+html.app .vg-scroll{height:auto !important}
+html.app .vg-section{--cw:min(76vw,calc(52svh * .74),340px);--sh:calc(var(--cw) * 1.3334 + 40px);position:relative;top:auto;height:auto;overflow:hidden;overflow-x:clip;overflow-y:visible;background:transparent;color:#fff;display:grid;grid-template-columns:1fr auto;grid-template-areas:"stage stage" "dots dots" "count ctrl";align-items:center;padding-bottom:6px}
+html.app .vg-label{display:none}
+html.app .vg-stage{grid-area:stage;position:relative;top:auto;right:auto;bottom:auto;left:auto;height:var(--sh);z-index:1}
+html.app .vg-card{width:var(--cw);aspect-ratio:3/4;border-radius:24px;transition:transform .5s cubic-bezier(.2,.8,.2,1),opacity .4s ease;pointer-events:none}
+html.app .vg-card.pos-p2,html.app .vg-card.pos-m2{opacity:1}
+html.app .vg-card.pos-hide{visibility:hidden}
+html.app .vg-card::after{content:'';position:absolute;top:0;right:0;bottom:0;left:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(255,255,255,.22);pointer-events:none;z-index:4}
+html.app .vg-card.pos-0::after{box-shadow:inset 0 0 0 1.5px var(--acc,#14F0FF)}
+html.app .vg-tint{background:linear-gradient(to top,rgba(10,6,18,.92) 0%,rgba(10,6,18,var(--vm,.6)) 48%,rgba(10,6,18,var(--vt,.5)) 100%) !important}
+html.app .vg-pill,html.app .vg-more{background:var(--acc,#14F0FF) !important;color:var(--acc-fg,#0A0612) !important}
+html.app .vg-open{display:none}
+html.app .am-moving .vg-card{will-change:transform,opacity}
+
+/* resplandor detrás de la tarjeta activa: 3 capas estáticas, solo cambia la opacidad */
+html.app .am-glow{position:absolute;top:0;left:0;right:0;height:var(--sh);pointer-events:none;z-index:0}
+html.app .am-glow i{position:absolute;top:50%;left:50%;width:calc(var(--cw) * 1.7);height:calc(var(--cw) * 1.7);margin:calc(var(--cw) * -.85) 0 0 calc(var(--cw) * -.85);border-radius:50%;opacity:0;transition:opacity .5s ease}
+html.app .am-glow .g-cy{background:radial-gradient(closest-side,rgba(20,240,255,.38),rgba(20,240,255,0))}
+html.app .am-glow .g-mg{background:radial-gradient(closest-side,rgba(255,31,200,.38),rgba(255,31,200,0))}
+html.app .am-glow .g-vi{background:radial-gradient(closest-side,rgba(123,47,247,.5),rgba(123,47,247,0))}
+html.app .vg-section[data-glow=cy] .g-cy,html.app .vg-section[data-glow=mg] .g-mg,html.app .vg-section[data-glow=vi] .g-vi{opacity:1}
+
+/* deslizador transparente: inercia nativa + encaje en cada tarjeta */
+html.app .am-snap{position:absolute;top:0;left:0;right:0;height:var(--sh);display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;padding:0 calc(50% - var(--cw) / 2);overscroll-behavior-x:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch;z-index:9}
+html.app .am-snap::-webkit-scrollbar{display:none}
+html.app .am-snapi{flex:0 0 var(--cw);height:100%;padding:0;border:0;background:transparent;scroll-snap-align:center;cursor:pointer}
+html.app .am-snapi:focus-visible{outline:3px solid #14F0FF;outline-offset:-6px;border-radius:24px}
+
+/* puntos, contador y flechas */
+html.app .am-dots{grid-area:dots;display:flex;justify-content:center;padding-top:4px;z-index:2}
+html.app .am-dot{width:44px;height:44px;padding:0;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer}
+html.app .am-dot i{display:block;width:8px;height:8px;border-radius:4px;background:rgba(20,240,255,.35);transition:width .3s ease,background .3s ease}
+html.app .am-dot.on i{width:24px;background:#14F0FF}
+html.app .am-dot:focus-visible{outline:2px solid #14F0FF;outline-offset:-6px;border-radius:12px}
+html.app .vg-count{grid-area:count;position:static;left:auto;bottom:auto;padding:0 20px;font-size:16px;font-weight:800;color:#E4C2FA;z-index:2}
+html.app .vg-controls{grid-area:ctrl;position:static;right:auto;bottom:auto;left:auto;padding:0 20px 0 0;justify-content:flex-end;z-index:2}
+html.app .vg-btn.prev{background:rgba(255,255,255,.08)}
+html.app .vg-btn.prev svg{stroke:#14F0FF}
+html.app .vg-btn.next{background:#14F0FF}
+html.app .vg-btn.next svg{stroke:#0A0612}
+html.app .vg-btn:focus-visible{outline:3px solid #14F0FF;outline-offset:3px}
+
+/* sin 3D o con movimiento reducido: carrusel plano con encaje */
+html.app .am-flat .vg-stage{perspective:none}
+html.app .am-flat .vg-card.pos-p1{transform:translate(calc(-50% + 104%),-50%) scale(.86)}
+html.app .am-flat .vg-card.pos-m1{transform:translate(calc(-50% - 104%),-50%) scale(.86)}
+html.app .am-flat .vg-card.pos-p2{transform:translate(calc(-50% + 208%),-50%) scale(.86)}
+html.app .am-flat .vg-card.pos-m2{transform:translate(calc(-50% - 208%),-50%) scale(.86)}
+@media (prefers-reduced-motion: reduce){
+html.app .am-sheet.open .am-loop svg{animation:none}
+html.app .am-body{scroll-behavior:auto}
+html.app .vg-card,html.app .vg-info,html.app .am-glow i,html.app .am-dot i{transition:none !important}
+html.app .am-snap{scroll-behavior:auto}
 }

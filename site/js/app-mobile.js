@@ -14,7 +14,6 @@ var mq = window.matchMedia('(max-width:720px)');
 var rmq = window.matchMedia('(prefers-reduced-motion: reduce)');
 var built = false, rootEl = null, V = null;
 var layers = [], sheets = {}, lastSrc = null, view = 'inicio', deferred = null;
-var rail = null;
 
 function $(id) { return document.getElementById(id); }
 function h(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
@@ -28,12 +27,19 @@ var SERVICES = [
 { id: 'apps', t: 'Apps y PWA a medida', ic: '<rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18h2"/>', d: 'Apps que se instalan desde el navegador y funcionan en cualquier teléfono, hechas a la medida de tu negocio.', need: 'App o PWA a medida' },
 { id: 'sistemas', t: 'Sistemas para negocios', ic: '<path d="M4 20h16M7 20v-8M12 20V6M17 20v-5"/>', d: 'Paneles y herramientas para ordenar tu operación: ventas, citas, pedidos o reparto, con información que puedes usar a diario.', need: 'Sistema para mi negocio' }
 ];
-var STEPS = [
-['Escuchamos', 'Hablamos de tu negocio, tu meta y tu presupuesto.'],
-['Proponemos', 'Te mostramos una propuesta clara con alcance, tiempo y precio.'],
-['Construimos', 'Diseñamos y desarrollamos, con avances que puedes ver y comentar.'],
-['Lanzamos', 'Publicamos, te acompañamos y ajustamos lo que haga falta.']
-];
+/* Método VIBRA: nombre del paso, frase, color de acento y color del número */
+var METODO = {
+title: 'Cómo trabajamos',
+sub: 'Un ciclo de 5 pasos para que tu proyecto funcione de verdad, y no solo se vea bien.',
+steps: [
+['VER', 'Entendemos tu negocio y el problema real antes de proponer nada.', '#14F0FF', '#0A0612'],
+['INVESTIGAR', 'Cambiamos las suposiciones por evidencia: tus clientes, tu competencia, tus números.', '#FF1FC8', '#0A0612'],
+['BLUEPRINT', 'Diseñamos la solución y decidimos qué dejar para después. Te presentamos una propuesta clara con alcance, tiempo y precio.', '#7B2FF7', '#FFFFFF'],
+['REALIZAR', 'Construimos lo acordado, con avances que puedes ver y comentar.', '#14F0FF', '#0A0612'],
+['ACELERAR', 'Medimos, aprendemos y mejoramos primero lo que más pesa.', '#FF1FC8', '#0A0612']
+],
+close: 'Y volvemos a empezar: cada ciclo parte de lo que aprendimos en el anterior.'
+};
 var NEEDS = ['Branding e identidad', 'Sitio web', 'App o PWA a medida', 'Sistema para mi negocio', 'Aún no lo sé'];
 var STAGES = ['Solo estoy explorando', 'Tengo una idea y quiero empezar pronto', 'Lo necesito con urgencia'];
 
@@ -53,6 +59,7 @@ ig: '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r=
 pin: '<path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>',
 install: '<path d="M12 4v11M7 11l5 5 5-5M5 20h14"/>',
 share: '<path d="M12 15V3M8 7l4-4 4 4M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/>',
+loop: '<path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v5h-5"/>',
 boom: '<rect x="3" y="3" width="6" height="6"/><rect x="15" y="3" width="6" height="6"/><rect x="9" y="9" width="6" height="6"/><rect x="3" y="15" width="6" height="6"/><rect x="15" y="15" width="6" height="6"/>'
 };
 function svgRaw(path, extra) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"' + (extra || '') + '>' + path + '</svg>'; }
@@ -170,6 +177,7 @@ grab.addEventListener('pointercancel', end);
 function setView(name) {
 view = name;
 Array.prototype.forEach.call(rootEl.querySelectorAll('.am-view'), function (v) { v.classList.toggle('on', v.getAttribute('data-view') === name); });
+if (name === 'portafolio' && gal.built) { flatCheck(); scrollGallery(V.index(), false); galleryOn(V.index()); }
 window.scrollTo(0, 0);
 setTab();
 }
@@ -231,11 +239,8 @@ if (built) return;
 V = window.VIBRA; if (!V) return;
 built = true;
 rootEl = h('div', 'am-root'); rootEl.id = 'am-root';
-var items = V.items, nn = String(items.length).padStart(2, '0');
+var items = V.items;
 
-var cards = items.map(function (it, i) {
-return '<button class="am-card" type="button" data-i="' + i + '" aria-label="Ver proyecto ' + it.name + '"><img src="' + it.shots[0] + '" alt="" loading="' + (i < 2 ? 'eager' : 'lazy') + '" decoding="async"><span class="am-tint"></span><span class="am-cname">' + it.name + '</span><span class="am-cpill">' + it.tag + '</span></button>';
-}).join('');
 var tile = function (act, label, ic) { return '<button class="am-tile" type="button" data-act="' + act + '"><span class="am-tic">' + svg(ic) + '</span><span class="am-tl">' + label + '</span></button>'; };
 var foot = '<p class="am-foot">&copy; 2026 <b>VIBRA</b> &middot; Valera, Trujillo &middot; Venezuela</p>';
 var row = function (ic, label, attrs) { return '<a class="am-row" ' + attrs + '><span class="am-tic">' + svg(ic) + '</span><span class="am-rt">' + label + '</span>' + svg('arrow') + '</a>'; };
@@ -250,13 +255,12 @@ rootEl.innerHTML =
 '<button class="am-install" type="button" data-act="instalar" hidden>' + svg('install') + 'Instalar VIBRA</button>' +
 '</div>' +
 '<div class="am-tiles">' + tile('portafolio', 'Portafolio', 'portafolio') + tile('servicios', 'Servicios', 'servicios') + tile('proceso', 'Proceso', 'proceso') + tile('contacto', 'Contacto', 'contacto') + '</div>' +
-'<div class="am-sec"><h2>Destacados</h2><span class="am-count" id="am-count" aria-hidden="true">01 / ' + nn + '</span></div>' +
-'<div class="am-rail" id="am-rail">' + cards + '</div>' + foot +
+foot +
 '</section>' +
 '<section class="am-view" data-view="portafolio">' +
 '<header class="am-top"><img src="assets/iso-gradiente.png" alt="" aria-hidden="true"><span class="am-brand">Portafolio</span></header>' +
 '<p class="am-lead">Trabajo real: marcas, sitios y sistemas.</p>' +
-'<div class="am-list">' + cards.replace(/class="am-card"/g, 'class="am-card wide"') + '</div>' + foot +
+'<div id="am-gal"></div>' + foot +
 '</section>' +
 '<nav class="am-bar" aria-label="Navegación principal">' +
 ['inicio:Inicio', 'portafolio:Portafolio', 'servicios:Servicios', 'contacto:Contacto', 'mas:Más'].map(function (x) { var p = x.split(':'); return '<button class="am-tab" type="button" data-tab="' + (p[0] === 'mas' ? 'mas' : p[0]) + '" aria-current="false">' + svg(p[0]) + '<span>' + p[1] + '</span></button>'; }).join('') + '</nav>' +
@@ -279,7 +283,11 @@ row('ig', '@vibrastudioweb', 'href="https://instagram.com/vibrastudioweb" target
 '<div class="am-row static"><span class="am-tic">' + svg('pin') + '</span><span class="am-rt">Valera, Trujillo · Venezuela</span></div></div>' +
 '<button class="am-cta" type="button" data-act="cotizar">Cotizar proyecto ' + svg('arrow') + '</button>',
 { tab: 'contacto' });
-makeSheet('proceso', 'Proceso', '<ol class="am-steps">' + STEPS.map(function (s, i) { return '<li><span class="am-n">' + (i + 1) + '</span><div><b>' + s[0] + '</b><p>' + s[1] + '</p></div></li>'; }).join('') + '</ol><button class="am-cta" type="button" data-act="cotizar">Cotizar proyecto ' + svg('arrow') + '</button>', { tab: '' });
+makeSheet('proceso', METODO.title,
+'<p class="am-lead">' + METODO.sub + '</p>' +
+'<ol class="am-steps" role="list" aria-label="Método VIBRA, 5 pasos">' + METODO.steps.map(function (st, i) { return '<li style="--ac:' + st[2] + ';--ac-fg:' + st[3] + '"><span class="am-n" aria-hidden="true">' + (i + 1) + '</span><div><b><span class="am-vh">Paso ' + (i + 1) + ': </span>' + st[0] + '</b><p>' + st[1] + '</p></div></li>'; }).join('') + '</ol>' +
+'<div class="am-cycle" role="note"><span class="am-loop" aria-hidden="true">' + svg('loop') + '</span><p>' + METODO.close + '</p></div>' +
+'<button class="am-cta" type="button" data-act="cotizar">Cotizar proyecto ' + svg('arrow') + '</button>', { tab: '' });
 makeSheet('cotizar', 'Cotizar proyecto', '', { tab: '', onOpen: renderWizard });
 makeSheet('mas', 'Más',
 '<div class="am-svc">' +
@@ -292,10 +300,9 @@ makeSheet('ios', 'Instalar VIBRA',
 '<p class="am-desc">En iPhone o iPad: toca <b>Compartir</b> ' + svg('share', ' class="inl"') + ' y luego <b>Agregar a inicio</b>.</p>', { tab: 'mas' });
 
 rootEl.addEventListener('click', function (e) {
-var t = e.target.closest && e.target.closest('[data-tab],[data-act],[data-i],[data-svc],[data-quote],[data-need],[data-stage],[data-wback]');
+var t = e.target.closest && e.target.closest('[data-tab],[data-act],[data-svc],[data-quote],[data-need],[data-stage],[data-wback]');
 if (!t || !rootEl.contains(t)) return;
 if (t.hasAttribute('data-tab')) { goTab(t.getAttribute('data-tab')); return; }
-if (t.hasAttribute('data-i')) { openProject(+t.getAttribute('data-i'), t); return; }
 if (t.hasAttribute('data-svc')) { openSheet('servicio', t.getAttribute('data-svc')); return; }
 if (t.hasAttribute('data-quote')) { var need = t.getAttribute('data-quote'); later(function () { openWizard(need); }); return; }
 if (t.hasAttribute('data-need')) { W.need = t.getAttribute('data-need'); W.step = 2; vib(6); renderWizard(); return; }
@@ -319,20 +326,6 @@ e.stopImmediatePropagation(); closeTop();
 }, true);
 drag($('vd-layer'), document.querySelector('.vd-top'), function () { closeTop(); });
 
-/* riel de destacados */
-rail = $('am-rail');
-var cnt = $('am-count'), ticking = false;
-rail.addEventListener('scroll', function () {
-if (ticking) return; ticking = true;
-requestAnimationFrame(function () {
-ticking = false;
-var c = rail.querySelector('.am-card'); if (!c) return;
-var step = c.getBoundingClientRect().width + 12;
-var i = Math.max(0, Math.min(items.length - 1, Math.round(rail.scrollLeft / step)));
-cnt.textContent = String(i + 1).padStart(2, '0') + ' / ' + nn;
-});
-}, { passive: true });
-
 /* tarjeta manifiesto: el cubo se pausa fuera de pantalla o con la pestaña oculta */
 var mani = $('am-mani');
 if (mani) {
@@ -343,8 +336,90 @@ document.addEventListener('visibilitychange', function () { mani.classList.toggl
 updateInstall();
 setTab();
 try { history.replaceState({ vl: 0 }, ''); } catch (e) {}
+setupGallery();
 root.classList.add('app-ready');
 }
+
+/* ---- galería 3D del Portafolio: reutiliza #trabajo (S/goTo/render de app.js) ---- */
+/* color de acento, texto sobre el acento, resplandor, velo medio y velo superior (más fuerte en las capturas claras) */
+var ACC = { 'Conxulty': ['#7B2FF7', '#FFFFFF', 'vi', .5, .38], 'La Feria': ['#FF1FC8', '#0A0612', 'mg', .76, .7], 'MANDAO': ['#14F0FF', '#0A0612', 'cy', .4, .3], 'Almas & Células': ['#FF1FC8', '#0A0612', 'mg', .7, .64], 'CUADRAO': ['#14F0FF', '#0A0612', 'cy', .5, .4], 'Apps a medida': ['#7B2FF7', '#FFFFFF', 'vi', .5, .4] };
+var gal = { built: false, home: null, snap: null, prog: 0, user: 0, raf: 0, last: -1, mv: 0 };
+function gw() { var c = gal.snap && gal.snap.firstChild; return (c && c.getBoundingClientRect().width) || 1; }
+function flatCheck() {
+var t = $('trabajo'); if (!t) return;
+var flat = reduce() || !(window.CSS && CSS.supports && CSS.supports('transform-style', 'preserve-3d'));
+t.classList.toggle('am-flat', flat);
+}
+function scrollGallery(i, smooth) {
+if (!gal.snap || !gal.snap.offsetWidth) return;
+var target = i * gw();
+if (Math.abs(gal.snap.scrollLeft - target) < 2) return;
+gal.prog = performance.now() + (smooth ? 800 : 150);
+try { gal.snap.scrollTo({ left: target, behavior: smooth && !reduce() ? 'smooth' : 'auto' }); } catch (e) { gal.snap.scrollLeft = target; }
+}
+function galleryOn(i) {
+if (!gal.built) return;
+var t = $('trabajo'), items = V.items, a = ACC[items[i].name] || ACC['Conxulty'];
+t.querySelector('.vg-section').setAttribute('data-glow', a[2]);
+Array.prototype.forEach.call(t.querySelectorAll('.am-dot'), function (d, j) { d.classList.toggle('on', j === i); d.setAttribute('aria-current', j === i ? 'true' : 'false'); });
+Array.prototype.forEach.call(gal.snap.children, function (b, j) { b.tabIndex = j === i ? 0 : -1; b.setAttribute('aria-label', (j === i ? 'Ver proyecto ' : 'Mostrar proyecto ') + items[j].name + ', ' + (j + 1) + ' de ' + items.length); });
+var st = $('vg-stage'); st.classList.add('am-moving'); clearTimeout(gal.mv); gal.mv = setTimeout(function () { st.classList.remove('am-moving'); }, 700);
+if (performance.now() - gal.user > 220) scrollGallery(i, gal.last >= 0 && Math.abs(i - gal.last) === 1);
+gal.last = i;
+}
+function openCard(i) {
+var el = document.querySelector('#vg-stage .vg-card.pos-0');
+openProject(i, el);
+}
+function setupGallery() {
+var t = $('trabajo'), host = $('am-gal'); if (!t || !host || !V) return;
+if (!gal.home) gal.home = { parent: t.parentNode, next: t.nextSibling };
+if (t.parentNode !== host) host.appendChild(t);
+var sec = t.querySelector('.vg-section'), items = V.items;
+if (!gal.built) {
+gal.built = true;
+var cards = $('vg-stage').querySelectorAll('.vg-card');
+items.forEach(function (it, i) { var a = ACC[it.name] || ACC['Conxulty']; cards[i].style.setProperty('--acc', a[0]); cards[i].style.setProperty('--acc-fg', a[1]); cards[i].style.setProperty('--vm', a[3]); cards[i].style.setProperty('--vt', a[4]); var im = cards[i].querySelector('.vg-bg'); if (im) { im.loading = 'eager'; if (im.decode) im.decode().catch(function () {}); } });
+var glow = h('div', 'am-glow'); glow.setAttribute('aria-hidden', 'true'); glow.innerHTML = '<i class="g-cy"></i><i class="g-mg"></i><i class="g-vi"></i>';
+sec.insertBefore(glow, sec.firstChild);
+var snap = h('div', 'am-snap'); snap.setAttribute('role', 'group'); snap.setAttribute('aria-label', 'Proyectos del portafolio, desliza para cambiar');
+items.forEach(function (it, i) { var b = h('button', 'am-snapi'); b.type = 'button'; b.setAttribute('data-g', i); snap.appendChild(b); });
+sec.appendChild(snap); gal.snap = snap;
+var dots = h('div', 'am-dots');
+items.forEach(function (it, i) { var d = h('button', 'am-dot', '<i></i>'); d.type = 'button'; d.setAttribute('data-g', i); d.setAttribute('aria-label', 'Ir al proyecto ' + (i + 1) + ' de ' + items.length + ': ' + it.name); dots.appendChild(d); });
+sec.appendChild(dots);
+dots.addEventListener('click', function (e) { var d = e.target.closest && e.target.closest('.am-dot'); if (d) { vib(6); V.go(+d.getAttribute('data-g')); } });
+snap.addEventListener('scroll', function () {
+if (performance.now() < gal.prog) return;
+gal.user = performance.now();
+if (gal.raf) return;
+gal.raf = requestAnimationFrame(function () { gal.raf = 0; var i = Math.max(0, Math.min(items.length - 1, Math.round(snap.scrollLeft / gw()))); if (i !== V.index()) { V.go(i); } });
+}, { passive: true });
+snap.addEventListener('click', function (e) {
+var cur = V.index(), N = items.length, child = e.target.closest && e.target.closest('.am-snapi');
+if (e.detail === 0 && child) { var j = +child.getAttribute('data-g'); if (j === cur) openCard(cur); else V.go(j); return; }
+var r = snap.getBoundingClientRect(), dx = e.clientX - (r.left + r.width / 2);
+if (Math.abs(dx) <= gw() / 2) openCard(cur);
+else { vib(6); V.go((cur + (dx < 0 ? -1 : 1) + N) % N); }
+});
+snap.addEventListener('keydown', function (e) {
+if (e.key === 'ArrowRight') { e.preventDefault(); var n1 = Math.min(items.length - 1, V.index() + 1); V.go(n1); snap.children[n1].focus({ preventScroll: true }); }
+else if (e.key === 'ArrowLeft') { e.preventDefault(); var n2 = Math.max(0, V.index() - 1); V.go(n2); snap.children[n2].focus({ preventScroll: true }); }
+});
+window.VIBRA_ON = galleryOn;
+}
+flatCheck();
+galleryOn(V.index());
+scrollGallery(V.index(), false);
+}
+function releaseGallery() {
+var t = $('trabajo');
+if (t && gal.home && t.parentNode !== gal.home.parent) {
+if (gal.home.next && gal.home.next.parentNode === gal.home.parent) gal.home.parent.insertBefore(t, gal.home.next); else gal.home.parent.appendChild(t);
+}
+}
+if (rmq.addEventListener) rmq.addEventListener('change', flatCheck);
+
 
 /* ---- instalar ---- */
 function standalone() { return (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true; }
@@ -384,8 +459,8 @@ setTimeout(out, 1200);
 
 /* ---- activar / desactivar según el ancho ---- */
 function sync() {
-if (mq.matches) { root.classList.add('app'); build(); }
-else { root.classList.remove('app', 'splash', 'splash-out'); }
+if (mq.matches) { root.classList.add('app'); build(); setupGallery(); }
+else { root.classList.remove('app', 'splash', 'splash-out'); releaseGallery(); }
 }
 function init() {
 sync();
