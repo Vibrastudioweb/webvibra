@@ -36,10 +36,6 @@ html.app .am-install[hidden],html.app .am-row[hidden]{display:none}
 html.app .am-install svg{width:20px;height:20px;color:var(--cy)}
 
 /* accesos rápidos en vidrio */
-html.app .am-tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:22px 20px 6px}
-html.app .am-tile{display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:18px;min-height:104px;padding:16px;border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.06);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);color:#fff;text-align:left;cursor:pointer}
-html.app .am-tile:active{transform:scale(.97);background:rgba(255,255,255,.1)}
-html.app .am-tl{font-size:18px;font-weight:800;letter-spacing:-.01em}
 html.app .am-tic{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;flex:none;border-radius:14px;background:rgba(20,240,255,.12);color:var(--cy)}
 html.app .am-tic svg{width:24px;height:24px}
 html.app .am-tic.big{width:64px;height:64px;border-radius:20px;margin-bottom:14px}
@@ -149,7 +145,6 @@ html.app #am-splash .sp-logo{animation:none}
 
 
 /* ---- galería 3D del Portafolio (reutiliza #trabajo y las reglas .vg-* de styles.css) ---- */
-html.app .am-view[data-view=portafolio] #trabajo{display:block}
 html.app .vg-scroll{height:auto !important}
 html.app .vg-section{--cw:min(76vw,calc(52svh * .74),340px);--sh:calc(var(--cw) * 1.3334 + 40px);position:relative;top:auto;height:auto;overflow:hidden;overflow-x:clip;overflow-y:visible;background:transparent;color:#fff;display:grid;grid-template-columns:1fr auto;grid-template-areas:"stage stage" "dots dots" "count ctrl";align-items:center;padding-bottom:6px}
 html.app .vg-label{display:none}
@@ -173,7 +168,7 @@ html.app .am-glow .g-vi{background:radial-gradient(closest-side,rgba(123,47,247,
 html.app .vg-section[data-glow=cy] .g-cy,html.app .vg-section[data-glow=mg] .g-mg,html.app .vg-section[data-glow=vi] .g-vi{opacity:1}
 
 /* deslizador transparente: inercia nativa + encaje en cada tarjeta */
-html.app .am-snap{position:absolute;top:0;left:0;right:0;height:var(--sh);display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;padding:0 calc(50% - var(--cw) / 2);overscroll-behavior-x:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch;z-index:9}
+html.app .am-snap{touch-action:pan-x pan-y;position:absolute;top:0;left:0;right:0;height:var(--sh);display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;padding:0 calc(50% - var(--cw) / 2);overscroll-behavior-x:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch;z-index:9}
 html.app .am-snap::-webkit-scrollbar{display:none}
 html.app .am-snapi{flex:0 0 var(--cw);height:100%;padding:0;border:0;background:transparent;scroll-snap-align:center;cursor:pointer}
 html.app .am-snapi:focus-visible{outline:3px solid #14F0FF;outline-offset:-6px;border-radius:24px}

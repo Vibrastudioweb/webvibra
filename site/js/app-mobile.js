@@ -13,7 +13,7 @@ var root = document.documentElement;
 var mq = window.matchMedia('(max-width:720px)');
 var rmq = window.matchMedia('(prefers-reduced-motion: reduce)');
 var built = false, rootEl = null, V = null;
-var layers = [], sheets = {}, lastSrc = null, view = 'inicio', deferred = null;
+var layers = [], sheets = {}, lastSrc = null, deferred = null;
 
 function $(id) { return document.getElementById(id); }
 function h(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
@@ -45,7 +45,6 @@ var STAGES = ['Solo estoy explorando', 'Tengo una idea y quiero empezar pronto',
 
 var IC = {
 inicio: '<path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/>',
-portafolio: '<rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/>',
 servicios: '<path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5"/>',
 proceso: '<path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/>',
 contacto: '<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/>',
@@ -174,13 +173,6 @@ grab.addEventListener('pointercancel', end);
 }
 
 /* ---- pestañas y vistas ---- */
-function setView(name) {
-view = name;
-Array.prototype.forEach.call(rootEl.querySelectorAll('.am-view'), function (v) { v.classList.toggle('on', v.getAttribute('data-view') === name); });
-if (name === 'portafolio' && gal.built) { flatCheck(); scrollGallery(V.index(), false); galleryOn(V.index()); }
-window.scrollTo(0, 0);
-setTab();
-}
 function setTab() {
 if (!rootEl) return;
 var open = '', l = null, i;
@@ -188,13 +180,13 @@ for (i = layers.length - 1; i >= 0; i--) if (layers[i].sheet) { l = layers[i]; b
 if (l) open = (sheets[l.sheet] && sheets[l.sheet].tab) || '';
 Array.prototype.forEach.call(rootEl.querySelectorAll('.am-tab'), function (b) {
 var t = b.getAttribute('data-tab');
-var on = l ? t === open : t === view;
+var on = l ? t === open : t === 'inicio';
 b.classList.toggle('on', on); b.setAttribute('aria-current', on ? 'page' : 'false');
 });
 }
 function goTab(t) {
 vib(8);
-if (t === 'inicio' || t === 'portafolio') { if (layers.length) closeAll(); setView(t); }
+if (t === 'inicio') { if (layers.length) closeAll(); window.scrollTo(0, 0); setTab(); }
 else openSheet(t);
 }
 
@@ -241,7 +233,6 @@ built = true;
 rootEl = h('div', 'am-root'); rootEl.id = 'am-root';
 var items = V.items;
 
-var tile = function (act, label, ic) { return '<button class="am-tile" type="button" data-act="' + act + '"><span class="am-tic">' + svg(ic) + '</span><span class="am-tl">' + label + '</span></button>'; };
 var foot = '<p class="am-foot">&copy; 2026 <b>VIBRA</b> &middot; Valera, Trujillo &middot; Venezuela</p>';
 var row = function (ic, label, attrs) { return '<a class="am-row" ' + attrs + '><span class="am-tic">' + svg(ic) + '</span><span class="am-rt">' + label + '</span>' + svg('arrow') + '</a>'; };
 
@@ -250,20 +241,15 @@ rootEl.innerHTML =
 '<header class="am-top"><img src="assets/iso-gradiente.png" alt="" aria-hidden="true"><span class="am-brand">VIBRA</span><span class="am-loc">Valera · Venezuela</span></header>' +
 '<div class="am-hero"><p class="am-kicker">Estudio de marcas, web y apps</p></div>' +
 '<div class="am-manwrap"><div class="am-mani" id="am-mani"><h1 class="am-mh" aria-label="Construimos marcas que funcionan."><span class="am-ml">Construimos</span><span class="vibra-slot" aria-hidden="true"><span class="vibra-cube"><span class="vibra-face f1">Marcas</span><span class="vibra-face f2">Apps</span><span class="vibra-face f3">Sitios web</span><span class="vibra-face f4">Sistemas<br>a medida</span></span></span><span class="am-ml">que</span><span class="am-ml am-mp">funcionan.</span></h1><span class="am-mhint" aria-hidden="true">Ver servicios ' + svg('arrow') + '</span><button class="am-mgo" type="button" data-act="servicios" aria-label="Ver servicios"></button></div></div>' +
+'<div id="am-gal"></div>' +
 '<div class="am-actions">' +
 '<button class="am-cta" type="button" data-act="cotizar">Cotizar proyecto ' + svg('arrow') + '</button>' +
 '<button class="am-install" type="button" data-act="instalar" hidden>' + svg('install') + 'Instalar VIBRA</button>' +
 '</div>' +
-'<div class="am-tiles">' + tile('portafolio', 'Portafolio', 'portafolio') + tile('servicios', 'Servicios', 'servicios') + tile('proceso', 'Proceso', 'proceso') + tile('contacto', 'Contacto', 'contacto') + '</div>' +
 foot +
 '</section>' +
-'<section class="am-view" data-view="portafolio">' +
-'<header class="am-top"><img src="assets/iso-gradiente.png" alt="" aria-hidden="true"><span class="am-brand">Portafolio</span></header>' +
-'<p class="am-lead">Trabajo real: marcas, sitios y sistemas.</p>' +
-'<div id="am-gal"></div>' + foot +
-'</section>' +
 '<nav class="am-bar" aria-label="Navegación principal">' +
-['inicio:Inicio', 'portafolio:Portafolio', 'servicios:Servicios', 'contacto:Contacto', 'mas:Más'].map(function (x) { var p = x.split(':'); return '<button class="am-tab" type="button" data-tab="' + (p[0] === 'mas' ? 'mas' : p[0]) + '" aria-current="false">' + svg(p[0]) + '<span>' + p[1] + '</span></button>'; }).join('') + '</nav>' +
+['inicio:Inicio', 'proceso:Proceso', 'servicios:Servicios', 'contacto:Contacto', 'mas:Más'].map(function (x) { var p = x.split(':'); return '<button class="am-tab" type="button" data-tab="' + (p[0] === 'mas' ? 'mas' : p[0]) + '" aria-current="false">' + svg(p[0]) + '<span>' + p[1] + '</span></button>'; }).join('') + '</nav>' +
 '<div class="am-toast" id="am-toast" role="status" aria-live="polite"></div>';
 document.body.appendChild(rootEl);
 
@@ -287,12 +273,11 @@ makeSheet('proceso', METODO.title,
 '<p class="am-lead">' + METODO.sub + '</p>' +
 '<ol class="am-steps" role="list" aria-label="Método VIBRA, 5 pasos">' + METODO.steps.map(function (st, i) { return '<li style="--ac:' + st[2] + ';--ac-fg:' + st[3] + '"><span class="am-n" aria-hidden="true">' + (i + 1) + '</span><div><b><span class="am-vh">Paso ' + (i + 1) + ': </span>' + st[0] + '</b><p>' + st[1] + '</p></div></li>'; }).join('') + '</ol>' +
 '<div class="am-cycle" role="note"><span class="am-loop" aria-hidden="true">' + svg('loop') + '</span><p>' + METODO.close + '</p></div>' +
-'<button class="am-cta" type="button" data-act="cotizar">Cotizar proyecto ' + svg('arrow') + '</button>', { tab: '' });
+'<button class="am-cta" type="button" data-act="cotizar">Cotizar proyecto ' + svg('arrow') + '</button>', { tab: 'proceso' });
 makeSheet('cotizar', 'Cotizar proyecto', '', { tab: '', onOpen: renderWizard });
 makeSheet('mas', 'Más',
 '<div class="am-svc">' +
 '<button class="am-row" type="button" data-act="instalar" hidden><span class="am-tic">' + svg('install') + '</span><span class="am-rt">Instalar VIBRA</span>' + svg('arrow') + '</button>' +
-'<button class="am-row" type="button" data-act="proceso"><span class="am-tic">' + svg('proceso') + '</span><span class="am-rt">Cómo trabajamos</span>' + svg('arrow') + '</button>' +
 row('ig', 'Instagram', 'href="https://instagram.com/vibrastudioweb" target="_blank" rel="noopener"') +
 '<button class="am-row danger" type="button" data-act="boom"><span class="am-tic">' + svg('boom') + '</span><span class="am-rt">NO me toques</span>' + svg('arrow') + '</button></div>' + foot,
 { tab: 'mas' });
@@ -311,10 +296,7 @@ if (t.hasAttribute('data-wback')) { W.step = Math.max(1, W.step - 1); renderWiza
 var a = t.getAttribute('data-act');
 vib(8);
 if (a === 'cotizar') later(function () { openWizard(); });
-else if (a === 'portafolio') { later(function () { setView('portafolio'); }); }
 else if (a === 'servicios') later(function () { openSheet('servicios'); });
-else if (a === 'contacto') later(function () { openSheet('contacto'); });
-else if (a === 'proceso') later(function () { openSheet('proceso'); });
 else if (a === 'instalar') install();
 else if (a === 'boom') { closeAll(); setTimeout(function () { try { V.boom(); } catch (er) {} }, 420); }
 });
