@@ -243,10 +243,12 @@ var row = function (ic, label, attrs) { return '<a class="am-row" ' + attrs + '>
 rootEl.innerHTML =
 '<section class="am-view on" data-view="inicio">' +
 '<header class="am-top"><img src="assets/iso-gradiente.png" alt="" aria-hidden="true"><span class="am-brand">VIBRA</span><span class="am-loc">Valera · Venezuela</span></header>' +
-'<div class="am-hero"><p class="am-kicker">Estudio de marcas, web y apps</p>' +
-'<h1 class="am-h1">Construimos <em>marcas</em> que funcionan.</h1>' +
+'<div class="am-hero"><p class="am-kicker">Estudio de marcas, web y apps</p></div>' +
+'<div class="am-manwrap"><div class="am-mani" id="am-mani"><h1 class="am-mh" aria-label="Construimos marcas que funcionan."><span class="am-ml">Construimos</span><span class="vibra-slot" aria-hidden="true"><span class="vibra-cube"><span class="vibra-face f1">Marcas</span><span class="vibra-face f2">Apps</span><span class="vibra-face f3">Sitios web</span><span class="vibra-face f4">Sistemas<br>a medida</span></span></span><span class="am-ml">que</span><span class="am-ml am-mp">funcionan.</span></h1><span class="am-mhint" aria-hidden="true">Ver servicios ' + svg('arrow') + '</span><button class="am-mgo" type="button" data-act="servicios" aria-label="Ver servicios"></button></div></div>' +
+'<div class="am-actions">' +
 '<button class="am-cta" type="button" data-act="cotizar">Cotizar proyecto ' + svg('arrow') + '</button>' +
-'<button class="am-install" type="button" data-act="instalar" hidden>' + svg('install') + 'Instalar VIBRA</button></div>' +
+'<button class="am-install" type="button" data-act="instalar" hidden>' + svg('install') + 'Instalar VIBRA</button>' +
+'</div>' +
 '<div class="am-tiles">' + tile('portafolio', 'Portafolio', 'portafolio') + tile('servicios', 'Servicios', 'servicios') + tile('proceso', 'Proceso', 'proceso') + tile('contacto', 'Contacto', 'contacto') + '</div>' +
 '<div class="am-sec"><h2>Destacados</h2><span class="am-count" id="am-count" aria-hidden="true">01 / ' + nn + '</span></div>' +
 '<div class="am-rail" id="am-rail">' + cards + '</div>' + foot +
@@ -330,6 +332,13 @@ var i = Math.max(0, Math.min(items.length - 1, Math.round(rail.scrollLeft / step
 cnt.textContent = String(i + 1).padStart(2, '0') + ' / ' + nn;
 });
 }, { passive: true });
+
+/* tarjeta manifiesto: el cubo se pausa fuera de pantalla o con la pestaña oculta */
+var mani = $('am-mani');
+if (mani) {
+if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { es.forEach(function (e) { mani.classList.toggle('off', !e.isIntersecting); }); }, { threshold: 0 }).observe(mani);
+document.addEventListener('visibilitychange', function () { mani.classList.toggle('hid', document.hidden); });
+}
 
 updateInstall();
 setTab();
