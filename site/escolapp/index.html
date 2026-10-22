@@ -1,0 +1,278 @@
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>EscolApp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: tres bloques — hero de video a pantalla completa, vista previa de la demo navegable, y un cotizador sin precios que cierra por WhatsApp. */
+:root{
+  --font-d:'Bricolage Grotesque','Trebuchet MS',system-ui,sans-serif;
+  --font-b:'Figtree',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --bg:#F3F5F9;--surface:#FFFFFF;--surface-2:#E9EDF5;--ink:#14213D;--ink-2:#4B5873;--line:#DCE2EE;
+  --accent:#1F3F8F;--navy:#1F3F8F;--navy-d:#152C66;--on-accent:#FFFFFF;--accent-soft:#DDE5F7;
+  --yellow:#F2BE1A;--sky:#6CC2E8;--teal:#1D7A8C;--green:#2F7D3C;--crimson:#C21E4B;--pink:#EC6C96;--coral:#E5573E;
+  --on-yellow:#2A1E00;
+  --shadow:0 1px 2px rgba(20,33,61,.06),0 14px 36px rgba(20,33,61,.10);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0D1526;--surface:#162038;--surface-2:#1F2C4A;--ink:#EDF1F9;--ink-2:#A7B4CE;--line:#2A3A5C;
+  --accent:#6CC2E8;--navy:#1F3F8F;--navy-d:#0A132E;--on-accent:#0D1526;--accent-soft:#1F2C4A;
+  --yellow:#F5C73D;--sky:#6CC2E8;--teal:#3DA6BB;--green:#4FAE60;--crimson:#E24A72;--pink:#F083A6;--coral:#F2745C;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 36px rgba(0,0,0,.35);color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0D1526;--surface:#162038;--surface-2:#1F2C4A;--ink:#EDF1F9;--ink-2:#A7B4CE;--line:#2A3A5C;
+  --accent:#6CC2E8;--navy:#1F3F8F;--navy-d:#0A132E;--on-accent:#0D1526;--accent-soft:#1F2C4A;
+  --yellow:#F5C73D;--sky:#6CC2E8;--teal:#3DA6BB;--green:#4FAE60;--crimson:#E24A72;--pink:#F083A6;--coral:#F2745C;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 36px rgba(0,0,0,.35);color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-b);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--font-d);margin:0;line-height:1.08;letter-spacing:-.015em;text-wrap:balance}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:3px;border-radius:4px}
+.wrap{width:100%;max-width:1120px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+.eyebrow.light{color:var(--yellow)}
+.lede{font-size:19px;color:var(--ink-2);max-width:56ch}
+.lede.light{color:color-mix(in srgb,#fff 82%,var(--navy))}
+.small{font-size:14px;color:var(--ink-2)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:2px solid var(--accent);background:var(--accent);color:var(--on-accent);font:700 16px var(--font-b);padding:13px 22px;border-radius:12px;text-decoration:none;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn.ghost.light{color:#fff;border-color:rgba(255,255,255,.65)}
+.btn.sm{padding:9px 16px;font-size:15px}
+.btn:hover{filter:brightness(1.06)}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;font-size:14px;font-weight:700;padding:7px 14px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+.sec-h{display:grid;gap:12px;margin-bottom:34px}
+.sec-h h2{font-size:clamp(28px,4.2vw,40px);font-weight:800}
+
+/* ---------- barra superior ---------- */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--bg);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--bg)}
+.nav{display:flex;align-items:center;gap:18px;padding-block:12px}
+.brand{display:flex;align-items:center;gap:9px;font-family:var(--font-d);font-weight:800;font-size:21px;letter-spacing:-.01em;text-decoration:none}
+.brand svg{width:30px;height:24px;flex:none}
+.nav ul{display:flex;gap:18px;list-style:none;margin:0 0 0 auto;padding:0;font-weight:600;font-size:15px}
+.nav a.l{text-decoration:none;color:var(--ink-2)}.nav a.l:hover{color:var(--ink)}
+@media (max-width:760px){.nav ul{display:none}}
+
+/* ---------- bloque 1: hero video ---------- */
+.hero-full{position:relative;min-height:600px;height:92svh;display:flex;align-items:flex-end;overflow:hidden;background:linear-gradient(160deg,var(--navy),var(--navy-d))}
+.hero-bg{position:absolute;inset:0}
+.hero-bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;filter:brightness(.68) saturate(1.1)}
+.hero-bg.has-video video{display:block}
+.hero-bg.has-video .hero-pattern{opacity:0}
+.hero-pattern{position:absolute;inset:0;opacity:.08;
+  background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='110' viewBox='0 0 28 22'%3E%3Crect x='0' y='0' width='15' height='4' fill='%23F2BE1A'/%3E%3Crect x='17' y='0' width='11' height='4' fill='%236CC2E8'/%3E%3Crect x='3' y='6' width='9' height='4' fill='%23EC6C96'/%3E%3Crect x='14' y='6' width='14' height='4' fill='%236CC2E8'/%3E%3Crect x='0' y='12' width='12' height='4' fill='%232F7D3C'/%3E%3Crect x='14' y='12' width='8' height='4' fill='%23EC6C96'/%3E%3Crect x='24' y='12' width='4' height='4' fill='%23E5573E'/%3E%3Crect x='4' y='18' width='14' height='4' fill='%231D7A8C'/%3E%3Crect x='20' y='18' width='8' height='4' fill='%23F2BE1A'/%3E%3C/svg%3E");
+  background-size:280px 220px}
+.hero-scrim{position:absolute;inset:0;background:linear-gradient(0deg,var(--navy-d) 0%,rgba(13,25,58,.52) 40%,rgba(13,25,58,.32) 62%,rgba(13,25,58,.12) 100%)}
+.hero-content{position:relative;z-index:2;padding-block:0 64px;display:grid;gap:18px;max-width:760px}
+.hero-content h1{font-size:clamp(36px,6.4vw,62px);font-weight:800;color:#fff}
+.hero-content h1 em{font-style:normal;background:var(--yellow);color:var(--navy-d);padding:0 .14em;border-radius:.12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.hero-note{position:relative;z-index:2;color:color-mix(in srgb,#fff 70%,var(--navy));font-size:13.5px}
+.scrollcue{position:absolute;left:50%;bottom:max(18px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:2;display:grid;justify-items:center;gap:6px;color:#fff;opacity:.8;font-size:12px;letter-spacing:.07em;text-transform:uppercase;text-decoration:none}
+.scrollcue svg{width:18px;height:18px;animation:bob 1.8s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+@media (prefers-reduced-motion:reduce){.scrollcue svg{animation:none}}
+
+/* ---------- bloque 2: demo ---------- */
+.demo-block{padding-block:84px;background:var(--surface);border-block:1px solid var(--line)}
+.demo-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.86fr);gap:56px;align-items:center}
+.role-chips{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 28px}
+.demo-copy .btn{margin-top:4px}
+.demo-copy .small{margin-top:10px}
+.demo-visual{justify-self:center;max-width:320px}
+.phone-shot{display:block;width:100%;border-radius:30px;border:1px solid var(--line);box-shadow:var(--shadow)}
+@media (max-width:860px){.demo-grid{grid-template-columns:minmax(0,1fr);gap:36px}.demo-visual{order:-1;max-width:260px}}
+
+/* ---------- bloque 3: cotizador ---------- */
+.quote-block{padding-block:88px}
+.quote-card{background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:30px;display:grid;gap:22px;max-width:700px}
+.qfield{display:grid;gap:10px}
+.qfield>label{font-weight:700;font-size:15px}
+.q-count{width:100%;max-width:340px;font:500 16px var(--font-b);color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:11px 12px}
+.qchecks{display:grid;gap:8px}
+.qchk{display:flex;align-items:flex-start;gap:10px;background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer}
+.qchk input{margin-top:3px;width:18px;height:18px;accent-color:var(--accent);flex:none}
+.qchk b{display:block;font-size:15px}
+.qchk span{display:block;color:var(--ink-2);font-size:13.5px;margin-top:2px}
+.qchk:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+.qresult{border-radius:14px;padding:16px 18px;background:var(--accent-soft);display:grid;gap:8px}
+.qresult[hidden]{display:none}
+.qresult .etbadge{justify-self:start;font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:4px 10px;border-radius:999px;background:var(--navy);color:#fff}
+.qresult p{color:var(--ink);font-size:15px}
+.qresult ul{margin:0;padding-left:20px;display:grid;gap:4px;color:var(--ink);font-size:15px}
+.qnote{font-size:13.5px;color:var(--ink-2)}
+.out{background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:14px;font-size:14.5px;white-space:pre-wrap;overflow-wrap:anywhere}
+.out[hidden]{display:none}
+
+footer{padding-block:30px;font-size:14.5px;color:var(--ink-2);background:var(--surface);border-top:1px solid var(--line)}
+footer .wrap{display:flex;gap:18px;justify-content:space-between;flex-wrap:wrap;align-items:center}
+footer .brand{font-size:17px}
+footer .brand svg{width:24px;height:19px}
+@media (max-width:640px){.demo-block,.quote-block{padding-block:56px}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="mk" viewBox="0 0 28 22"><rect x="0" y="0" width="15" height="4" fill="var(--yellow)"/><rect x="17" y="0" width="11" height="4" fill="var(--navy)"/><rect x="3" y="6" width="9" height="4" fill="var(--crimson)"/><rect x="14" y="6" width="14" height="4" fill="var(--sky)"/><rect x="0" y="12" width="12" height="4" fill="var(--green)"/><rect x="14" y="12" width="8" height="4" fill="var(--pink)"/><rect x="24" y="12" width="4" height="4" fill="var(--coral)"/><rect x="4" y="18" width="14" height="4" fill="var(--teal)"/><rect x="20" y="18" width="8" height="4" fill="var(--yellow)"/></symbol>
+</defs></svg>
+
+<header class="top"><div class="wrap nav">
+  <a class="brand" href="#inicio" aria-label="EscolApp, inicio"><svg aria-hidden="true"><use href="#mk"/></svg>EscolApp</a>
+  <ul>
+    <li><a class="l" href="#demo">Demo</a></li>
+    <li><a class="l" href="#cotizador">Cotizador</a></li>
+  </ul>
+  <a class="btn sm" href="#cotizador">Armar cotización</a>
+</div></header>
+
+<main id="inicio">
+
+<!-- ======================= BLOQUE 1 · HERO VIDEO ======================= -->
+<section class="hero-full">
+  <div class="hero-bg" id="heroBg">
+    <video id="heroVideo" autoplay muted loop playsinline aria-hidden="true"></video>
+    <div class="hero-pattern" aria-hidden="true"></div>
+  </div>
+  <div class="hero-scrim" aria-hidden="true"></div>
+  <div class="wrap hero-content">
+    <span class="eyebrow light">Para colegios de Venezuela</span>
+    <h1>Todo el colegio, <em>en una sola app</em>.</h1>
+    <p class="lede light">Cobranza, asistencia, comunicación y cantina — conectando a dirección, administración, docentes y familias, sin depender de los grupos de WhatsApp.</p>
+    <div class="cta-row">
+      <a class="btn" href="#demo">Ver la demo</a>
+      <a class="btn ghost light" href="#cotizador">Armar mi cotización</a>
+    </div>
+  </div>
+  <a class="scrollcue" href="#demo" aria-label="Bajar a la demo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+    Ver más
+  </a>
+</section>
+
+<!-- ======================= BLOQUE 2 · DEMO ======================= -->
+<section id="demo" class="demo-block"><div class="wrap demo-grid">
+  <div class="demo-copy">
+    <span class="eyebrow">La demo</span>
+    <h2>Así se ve EscolApp por dentro.</h2>
+    <p class="lede">No es una maqueta: es la app real, con datos de ejemplo. Cambia de rol arriba y recorre cada pantalla.</p>
+    <div class="role-chips">
+      <span class="chip">Representante</span>
+      <span class="chip">Docente</span>
+      <span class="chip">Estudiante</span>
+      <span class="chip">Cantina</span>
+      <span class="chip">Administración</span>
+      <span class="chip">Dirección</span>
+    </div>
+    <a class="btn" href="demo/index.html" target="_blank" rel="noopener">Probar demo completa</a>
+    <p class="small">Se abre en una pestaña nueva · datos ficticios</p>
+  </div>
+  <div class="demo-visual">
+    <img class="phone-shot" src="img/phone-preview.png" alt="Pantalla de inicio de un representante en EscolApp: mensualidad de octubre, asistencia y avisos">
+  </div>
+</div></section>
+
+<!-- ======================= BLOQUE 3 · COTIZADOR ======================= -->
+<section id="cotizador" class="quote-block"><div class="wrap">
+  <div class="sec-h">
+    <span class="eyebrow">Sin compromiso</span>
+    <h2>Arma el alcance para tu colegio.</h2>
+    <p class="lede">Esto no es una cotización automática: te da el alcance recomendado. El monto se arma contigo en la demo con dirección.</p>
+  </div>
+
+  <form class="quote-card" id="f-quote" novalidate>
+    <div class="qfield">
+      <label for="q-count">Estudiantes aproximados</label>
+      <select class="q-count" id="q-count">
+        <option>Menos de 200</option>
+        <option selected>200 a 500</option>
+        <option>500 a 1.000</option>
+        <option>Más de 1.000</option>
+      </select>
+    </div>
+
+    <div class="qfield">
+      <label>Qué te interesa</label>
+      <div class="qchecks" id="q-checks">
+        <label class="qchk"><input type="checkbox" value="Cobranza y pagos" data-stage="1"><span><b>Cobranza y pagos</b><span>Pagos en bolívares, verificación y recibo interno</span></span></label>
+        <label class="qchk"><input type="checkbox" value="Comunicación con las familias" data-stage="1"><span><b>Comunicación con las familias</b><span>Comunicados y agenda, sin grupos de WhatsApp</span></span></label>
+        <label class="qchk"><input type="checkbox" value="Asistencia" data-stage="1"><span><b>Asistencia</b><span>Registro diario por sección, al instante</span></span></label>
+        <label class="qchk"><input type="checkbox" value="Aula y notas" data-stage="2"><span><b>Aula y notas</b><span>Tareas, materiales, notas y boletín</span></span></label>
+        <label class="qchk"><input type="checkbox" value="Cantinapp" data-stage="2"><span><b>Cantinapp</b><span>Cantina con carnet QR y saldo prepagado</span></span></label>
+      </div>
+    </div>
+
+    <div class="qresult" id="qResult" hidden>
+      <span class="etbadge" id="qBadge">Etapa 1</span>
+      <p id="qText"></p>
+    </div>
+
+    <div class="cta-row">
+      <button class="btn" type="submit">Solicitar cotización por WhatsApp</button>
+    </div>
+    <p class="qnote" id="qHint">Elige al menos una opción para armar el resumen.</p>
+    <div class="out" id="qOut" hidden></div>
+  </form>
+</div></section>
+
+</main>
+
+<footer><div class="wrap">
+  <span class="brand"><svg aria-hidden="true"><use href="#mk"/></svg>EscolApp</span>
+  <span>Un producto de VIBRA · Valera, Trujillo, Venezuela · <a href="mailto:hola@vibra.ink">hola@vibra.ink</a></span>
+</div></footer>
+
+<script>
+/* Configuración: completa y vuelve a publicar cuando tengas los datos. */
+var HERO_VIDEO_SRC='video/hero.mp4';  /* ruta o URL del video del hero a pantalla completa (mp4) */
+var WA='584126553528'; /* número de WhatsApp con código de país, solo dígitos. Ej: 584120000000 */
+
+(function(){
+  if(HERO_VIDEO_SRC){
+    var v=document.getElementById('heroVideo');
+    var s=document.createElement('source');s.src=HERO_VIDEO_SRC;s.type='video/mp4';
+    v.appendChild(s);v.load();
+    document.getElementById('heroBg').classList.add('has-video');
+  }
+})();
+
+(function(){
+  var form=document.getElementById('f-quote'),
+      checks=Array.from(document.querySelectorAll('#q-checks input')),
+      result=document.getElementById('qResult'),badge=document.getElementById('qBadge'),text=document.getElementById('qText'),
+      hint=document.getElementById('qHint'),out=document.getElementById('qOut');
+
+  function selected(){return checks.filter(c=>c.checked)}
+
+  function update(){
+    var sel=selected();
+    if(!sel.length){result.hidden=true;hint.hidden=false;return}
+    hint.hidden=true;
+    var stage2=sel.some(c=>c.dataset.stage==='2');
+    badge.textContent=stage2?'Etapa 1 + Etapa 2':'Etapa 1';
+    text.textContent='Con '+document.getElementById('q-count').value.toLowerCase()+' estudiantes y lo que marcaste, te cubre '+(stage2?'la Etapa 1 completa más lo de Etapa 2 que elegiste.':'la Etapa 1.')+' El resto se afina en la demo con dirección.';
+    result.hidden=false;
+  }
+  checks.forEach(c=>c.addEventListener('change',update));
+  document.getElementById('q-count').addEventListener('change',update);
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var sel=selected();
+    if(!sel.length){hint.hidden=false;hint.style.color='var(--crimson, #C21E4B)';return}
+    var count=document.getElementById('q-count').value.toLowerCase();
+    var items=sel.map(c=>c.value).join(', ');
+    var msg='Hola, quiero cotizar EscolApp para mi colegio. Tenemos '+count+' estudiantes y nos interesa: '+items+'. ¿Podemos ver la demo con dirección?';
+    out.textContent=msg;out.hidden=false;
+    if(WA){
+      window.location.href='https://wa.me/'+WA+'?text='+encodeURIComponent(msg);
+    }else{
+      try{
+        navigator.clipboard.writeText(msg).then(function(){
+          out.textContent='Copiado — pégalo en tu chat de WhatsApp con VIBRA:\n\n'+msg;
+        });
+      }catch(x){}
+    }
+  });
+})();
+</script>
